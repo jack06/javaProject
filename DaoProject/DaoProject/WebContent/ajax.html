@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>JavaScript调用servlet</title>
+<script
+	src="http://cdnjs.gtimg.com/cdnjs/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+    
+    function getAjaxData(stu_id){
+    	var params={"studentId":stu_id,};
+    	$.ajax({
+	    		url:"http://localhost:8080/MyServerDemo/StudentById",
+	  			data:params,
+	  			method:'POST',
+	  			dataType:'json',
+	  			success:function(res){
+	  				var data=res;
+	  			},
+			error:function(res){
+				alert('error!');
+			}
+  			});
+}
+
+    //参考网址：http://www.cnblogs.com/Dot-Boy/archive/2008/10/26/1257159.html
+    $(function(){  
+    	
+        /*
+            1、WebService请求类型都为Post，WebService的Url为“[WebServiceUrl]/[WebMethod]”
+            2、contentType声明为Json
+            3、data要用Json的字符串格式传入
+            4、设置了dataType为json后，result就直接为返回的Json对象。
+ 
+        */
+        //调用无参数方法
+        $("#submit").click(function(){
+        	var userName = $("#username").val();
+        	//var password = $("#password").val();
+        	getAjaxData(userName);
+        	return false
+        }); 
+    })
+    </script>
+
+</head>
+
+<body>
+	<form method="post" name="form1">
+
+
+		<table border="1" cellspacing="1" cellpadding="1" bordercolor="silver"
+			align="center">
+			<tr>
+				<td colspan="2" align="center" bgcolor="#e8e8e8">学生id</td>
+			</tr>
+			<tr>
+				<td>用户名：</td>
+				<td><input type="text" name="username" id="username" /></td>
+			</tr>
+			<!-- <tr>
+				<td>密码：</td>
+				<td><input type="password" name="password" id="password" /></td>
+			</tr> -->
+			<tr>
+				<td><a href="rsg.jsp">新用户注册</a></td>
+				<!-- onclick="return check(this) 调用上面的Script进行验证 -->
+				<td><input type="submit" name="submit" id="submit" /><input
+					type="reset" name="reset" /></td>
+
+			</tr>
+		</table>
+	</form>
+</body>
+</html>
