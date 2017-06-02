@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icloud.dao.questions.QuestionnaireResultMapper" >
+  <resultMap id="BaseResultMap" type="com.icloud.model.questions.QuestionnaireResult" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="questionnaire_id" property="questionnaireId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="questionnaire_result" property="questionnaireResult" jdbcType="VARCHAR" />
+    <result column="result_note" property="resultNote" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, questionnaire_id, user_id, questionnaire_result, result_note
+  </sql>
+  
+</mapper>

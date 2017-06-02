@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icloud.dao.eventmanage.EventAllowAccessMapper" >
+  <resultMap id="BaseResultMap" type="com.icloud.model.eventmanage.EventAllowAccess" >
+    <result column="event_id" property="eventId" jdbcType="VARCHAR" />
+    <result column="user_role_id" property="userRoleId" jdbcType="VARCHAR"/>
+  </resultMap>
+  <!-- 通过事件查找可以访问的类型 -->
+  <select id="findListByEvent" parameterType="String" resultMap="BaseResultMap">
+    select * from t_event_allow_role where event_id=#{eventId}
+  </select>
+  
+ 
+ 
+</mapper>

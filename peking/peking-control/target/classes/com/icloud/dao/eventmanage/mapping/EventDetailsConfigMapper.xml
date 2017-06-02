@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icloud.dao.eventmanage.EventDetailsConfigMapper">
+	<resultMap id="BaseResultMap" type="com.icloud.model.eventmanage.EventDetailsConfig">
+		<result column="id" jdbcType="VARCHAR" property="Id" />
+		<result column="event_id" jdbcType="VARCHAR" property="eventId" />
+	</resultMap>
+
+	<insert id="save" parameterType="com.icloud.model.eventmanage.EventDetailsConfig">
+	  <selectKey keyProperty="id" order="BEFORE" resultType="String">
+	     select replace(uuid(),'-','') from dual
+	   </selectKey>
+		insert into t_event_details_config (id,event_id)
+		values (#{id},#{eventId,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<delete id="deleteByObj" parameterType="com.icloud.model.eventmanage.EventDetailsConfig">
+		 delete from t_event_details_config where event_id=#{eventId} and id !=#{id}
+	</delete>
+	
+	<delete id="deleteByKey" parameterType="String">
+		delete from t_event_details_config where id=#{Id}
+	</delete>
+	<delete id="deleteByEvent" parameterType="String">
+		delete from t_event_details_config where event_id=#{eventId}
+	</delete>
+	<select id="findForObject" parameterType="String"
+		resultMap="BaseResultMap">
+		select t.* from t_event_details_config t where t.id=#{id}
+	</select>
+	
+	<select id="findForList" parameterType="com.icloud.model.eventmanage.EventDetailsConfig"
+		resultMap="BaseResultMap">
+		select * from t_event_details_config
+		<where>
+			<if test="eventId != null">
+				and event_id=#{eventId}
+			</if>
+		</where>
+	</select>
+
+</mapper>

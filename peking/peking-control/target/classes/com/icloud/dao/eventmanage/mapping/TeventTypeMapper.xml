@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icloud.dao.eventmanage.TeventTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.icloud.model.eventmanage.TeventType" >
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="type_name" property="typeName" jdbcType="VARCHAR" />
+    <result column="type_mark" property="typeMark" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="sort_num" property="sortNum" jdbcType="INTEGER" />
+    <result column="type_icon" property="typeIcon" jdbcType="VARCHAR" />
+  </resultMap>
+   <sql id="Base_Column_List" >
+    t.id, t.type_name, t.type_mark, t.parent_id, t.sort_num, t.type_icon
+  </sql>
+
+  <select id="findCount" resultType="Integer" parameterType="com.icloud.model.eventmanage.TeventType" >
+    select count(1) from t_event_type t
+	 <trim prefixOverrides="and">
+		<where>
+			<if test="typeName  != null and typeName  != ''">
+				and t.type_name like concat(concat('%',#{typeName}),'%')
+			</if>
+		</where>
+	</trim>
+  </select>	
+	
+	<select id="findForList" resultMap="BaseResultMap" parameterType="com.icloud.model.eventmanage.TeventType">
+		select
+		<include refid="Base_Column_List" />  
+		from t_event_type t
+		<where>
+			<if test="typeName!=null">
+				and t.type_name like concat(concat('%',#{typeName}),'%')
+			</if>
+		</where>
+		order by sort_num asc limit #{startRow},#{pageSize}
+	</select>
+
+	<select id="findForObject" parameterType="String" resultMap="BaseResultMap">
+		select 
+        <include refid="Base_Column_List" />  
+		from t_event_type t where t.id=#{id}
+	</select>
+
+	<select id="selectCountByName" parameterType="String" resultType="Integer">
+		select count(1) from t_event_type t where
+		t.type_name=#{typeName}
+	</select>
+
+	<select id="selectCountByTypeMark" parameterType="String" resultType="Integer">
+		select count(1) from t_event_type t where
+		t.type_mark=#{typeMark}
+	</select>
+	
+	<select id="countByParent" parameterType="java.lang.String" resultType="Integer">
+		select count(1) from t_event_info t where t.type_id=#{id}
+	</select>
+	
+	
+	
+	<select id="selectAll" resultMap="BaseResultMap">
+		select
+		 <include refid="Base_Column_List" /> 
+		from t_event_type t
+	</select>
+
+	<delete id="deleteByKey" parameterType="java.lang.String">
+		delete from t_event_type
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="save" parameterType="com.icloud.model.eventmanage.TeventType"
+		keyProperty="id">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			select replace(uuid(),'-','') from dual
+		</selectKey>
+		insert into t_event_type (id, type_name, type_mark, parent_id, sort_num,type_icon)
+		values (#{id},
+		#{typeName,jdbcType=VARCHAR},#{typeMark,jdbcType=VARCHAR},#{parentId,jdbcType=VARCHAR}
+		, #{sortNum,jdbcType=INTEGER},#{typeIcon,jdbcType=VARCHAR})
+	</insert>
+
+ <update id="update" parameterType="com.icloud.model.eventmanage.TeventType" >
+    update t_event_type
+    <set >
+      <if test="typeName != null" >
+        type_name = #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="typeMark != null" >
+        type_mark = #{typeMark,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNum != null" >
+        sort_num = #{sortNum,jdbcType=INTEGER},
+      </if>
+      <if test="typeIcon != null" >
+        type_icon = #{typeIcon,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

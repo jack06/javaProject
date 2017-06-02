@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icloud.dao.user.UserRoleMapper">
+	<resultMap id="BaseResultMap" type="com.icloud.model.user.UserRole">
+		<result column="id" jdbcType="VARCHAR" property="id" />
+		<result column="role_name" jdbcType="VARCHAR" property="roleName" />
+		<result column="is_need_verify" jdbcType="VARCHAR" property="isNeedVerify"/>
+	</resultMap>
+
+	
+	<select id="findAll"  resultMap="BaseResultMap">
+		select t.* from t_user_role t
+	</select>
+	
+	<select id="findByKey" parameterType="String" resultMap="BaseResultMap">
+	   select * from t_user_role where id=#{id}
+	</select>
+
+</mapper>

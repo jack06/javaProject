@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icloud.dao.signup.SignUpRecordMapper">
+	<resultMap id="BaseResultMap" type="com.icloud.model.signup.SignUpRecord">
+		<result column="id" jdbcType="VARCHAR" property="id" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="nick" jdbcType="VARCHAR" property="nick" />
+		<result column="header_img" jdbcType="VARCHAR" property="headerImg" />
+		<result column="signup_config_id" jdbcType="VARCHAR" property="signUpConfigId" />
+		<result column="signup_user_id" jdbcType="VARCHAR" property="signUpUserId" />
+		<result column="phone" jdbcType="VARCHAR" property="phone" />
+		<result column="email" jdbcType="VARCHAR" property="email" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+	
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, create_time,nick,header_img,signup_config_id,signup_user_id,phone,email,name
+	</sql>
+
+
+    <select id="findForList" parameterType="com.icloud.model.signup.SignUpRecord" resultMap="BaseResultMap">
+       select * from t_signup_record 
+      <where>
+			<if test="signUpConfigId != null">
+				and signup_config_id = #{signUpConfigId,jdbcType=VARCHAR}
+			</if>
+		</where>
+    </select>
+   
+</mapper>

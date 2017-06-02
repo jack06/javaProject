@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icloud.dao.questions.QuestionOptionsMapper" >
+  <resultMap id="BaseResultMap" type="com.icloud.model.questions.QuestionOptions" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="question_id" property="questionId" jdbcType="VARCHAR" />
+    <result column="options_content" property="optionsContent" jdbcType="VARCHAR" />
+    <result column="is_correct" property="isCorrect" jdbcType="VARCHAR" />
+    <result column="questionnaire_id" property="questionnaireId" jdbcType="VARCHAR" />
+    
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, question_id, options_content, is_correct, questionnaire_id
+  </sql>
+  
+  <select id="selectByQuestion" parameterType="String" resultMap="BaseResultMap">
+     select
+     <include refid="Base_Column_List" />
+    from t_question_options where question_id=#{questionId}
+  </select>
+ 
+</mapper>

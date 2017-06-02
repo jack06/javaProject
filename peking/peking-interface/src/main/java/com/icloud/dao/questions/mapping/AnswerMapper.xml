@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icloud.dao.questions.AnswerMapper">
+	<resultMap id="BaseResultMap" type="com.icloud.model.questions.Answer">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="questioonnaire_id" property="questioonnaireId"
+			jdbcType="VARCHAR" />
+		<result column="question_id" property="questionId" jdbcType="VARCHAR" />
+		<result column="options_id" property="optionsId" jdbcType="VARCHAR" />
+		<result column="is_correct" property="isCorrect" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, questioonnaire_id, question_id, options_id, is_correct,
+		user_id,create_date
+	</sql>
+
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+
+	<select id="selectByExample" parameterType="com.icloud.common.QueryBuilder"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'true' as QUERYID,
+		<include refid="Base_Column_List" />
+		from t_answer
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+	<select id="countByExample" parameterType="com.icloud.common.QueryBuilder"
+		resultType="java.lang.Long">
+		select count(*) from t_answer
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from t_answer
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from t_answer
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.icloud.model.questions.Answer">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			select replace(uuid(),'-','') from dual
+		</selectKey>
+		insert into t_answer (id, questioonnaire_id, question_id,
+		options_id, is_correct, user_id,create_date
+		)
+		values (#{id,jdbcType=VARCHAR}, #{questioonnaireId,jdbcType=VARCHAR},
+		#{questionId,jdbcType=VARCHAR},
+		#{optionsId,jdbcType=VARCHAR}, #{isCorrect,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},#{createDate}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.icloud.model.questions.Answer">
+		insert into t_answer
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="questioonnaireId != null">
+				questioonnaire_id,
+			</if>
+			<if test="questionId != null">
+				question_id,
+			</if>
+			<if test="optionsId != null">
+				options_id,
+			</if>
+			<if test="isCorrect != null">
+				is_correct,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="questioonnaireId != null">
+				#{questioonnaireId,jdbcType=VARCHAR},
+			</if>
+			<if test="questionId != null">
+				#{questionId,jdbcType=VARCHAR},
+			</if>
+			<if test="optionsId != null">
+				#{optionsId,jdbcType=VARCHAR},
+			</if>
+			<if test="isCorrect != null">
+				#{isCorrect,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.icloud.model.questions.Answer">
+		update t_answer
+		<set>
+			<if test="questioonnaireId != null">
+				questioonnaire_id = #{questioonnaireId,jdbcType=VARCHAR},
+			</if>
+			<if test="questionId != null">
+				question_id = #{questionId,jdbcType=VARCHAR},
+			</if>
+			<if test="optionsId != null">
+				options_id = #{optionsId,jdbcType=VARCHAR},
+			</if>
+			<if test="isCorrect != null">
+				is_correct = #{isCorrect,jdbcType=VARCHAR},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.icloud.model.questions.Answer">
+		update t_answer
+		set questioonnaire_id = #{questioonnaireId,jdbcType=VARCHAR},
+		question_id = #{questionId,jdbcType=VARCHAR},
+		options_id = #{optionsId,jdbcType=VARCHAR},
+		is_correct = #{isCorrect,jdbcType=VARCHAR},
+		user_id = #{userId,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>

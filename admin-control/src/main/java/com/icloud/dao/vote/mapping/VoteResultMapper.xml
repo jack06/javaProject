@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icloud.dao.vote.VoteResultMapper" >
+  <resultMap id="BaseResultMap" type="com.icloud.model.vote.VoteResult" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="event_id" property="eventId" jdbcType="VARCHAR" />
+    <result column="vote_result" property="voteResult" jdbcType="VARCHAR" />
+    <result column="module_id" property="moduleId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, event_id, vote_result, module_id
+  </sql>
+</mapper>

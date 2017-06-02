@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icloud.dao.vote.VoteOptionMapper" >
+  <resultMap id="BaseResultMap" type="com.icloud.model.vote.VoteOption" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="config_id" property="configId" jdbcType="VARCHAR" />
+    <result column="event_id" property="eventId" jdbcType="VARCHAR" />
+    <result column="optiond" property="optiond" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, config_id, event_id, optiond
+  </sql>
+  
+  <select id="selectByModule" parameterType="String" resultMap="BaseResultMap">
+     select * from t_vote_option where config_id=#{moduleId}
+  </select>
+  
+  <select id="findByKey" parameterType="String" resultMap="BaseResultMap">
+    select * from t_vote_option where id=#{id}
+  </select>
+ 
+</mapper>

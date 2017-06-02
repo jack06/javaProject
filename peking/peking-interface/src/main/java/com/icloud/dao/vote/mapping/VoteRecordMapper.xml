@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icloud.dao.vote.VoteRecordMapper">
+	<resultMap id="BaseResultMap" type="com.icloud.model.vote.VoteRecord">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="event_id" property="eventId" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="vote_user" property="voteUser" jdbcType="VARCHAR" />
+		<result column="option_id" property="optionId" jdbcType="VARCHAR" />
+		<result column="module_id" property="moduleId" jdbcType="VARCHAR" />
+		<result column="nick" property="nick" jdbcType="VARCHAR" />
+		<result column="header_img" property="headerImg" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, event_id, create_time, vote_user, option_id, module_id
+	</sql>
+
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+
+
+	<select id="selectByExample" parameterType="com.icloud.common.QueryBuilder"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'true' as QUERYID,
+		<include refid="Base_Column_List" />
+		from t_vote_record
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+
+	<select id="countByExample" parameterType="com.icloud.common.QueryBuilder"
+		resultType="java.lang.Long">
+		select count(*) from t_vote_record
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from t_vote_record
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from t_vote_record
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.icloud.model.vote.VoteRecord">
+		<selectKey keyProperty="id" order="BEFORE" resultType="String">
+			select replace(uuid(),'-','') from dual
+		</selectKey>
+		insert into t_vote_record (id, event_id, create_time,
+		vote_user, option_id, module_id,nick,header_img
+		)
+		values (#{id,jdbcType=VARCHAR}, #{eventId,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{voteUser,jdbcType=VARCHAR}, #{optionId,jdbcType=VARCHAR}, #{moduleId,jdbcType=VARCHAR}
+		, #{nick,jdbcType=VARCHAR}, #{headerImg,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.icloud.model.vote.VoteRecord">
+		insert into t_vote_record
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="eventId != null">
+				event_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="voteUser != null">
+				vote_user,
+			</if>
+			<if test="optionId != null">
+				option_id,
+			</if>
+			<if test="moduleId != null">
+				module_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="eventId != null">
+				#{eventId,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="voteUser != null">
+				#{voteUser,jdbcType=VARCHAR},
+			</if>
+			<if test="optionId != null">
+				#{optionId,jdbcType=VARCHAR},
+			</if>
+			<if test="moduleId != null">
+				#{moduleId,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.icloud.model.vote.VoteRecord">
+		update t_vote_record
+		<set>
+			<if test="eventId != null">
+				event_id = #{eventId,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="voteUser != null">
+				vote_user = #{voteUser,jdbcType=VARCHAR},
+			</if>
+			<if test="optionId != null">
+				option_id = #{optionId,jdbcType=VARCHAR},
+			</if>
+			<if test="moduleId != null">
+				module_id = #{moduleId,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.icloud.model.vote.VoteRecord">
+		update t_vote_record
+		set event_id = #{eventId,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=TIMESTAMP},
+		vote_user = #{voteUser,jdbcType=VARCHAR},
+		option_id = #{optionId,jdbcType=VARCHAR},
+		module_id = #{moduleId,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>

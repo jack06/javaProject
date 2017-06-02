@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icloud.dao.event.EventFollowMapper">
+	<resultMap id="BaseResultMap" type="com.icloud.model.event.EventFollow">
+		<result column="id" jdbcType="VARCHAR" property="id" />
+		<result column="event_id" jdbcType="VARCHAR" property="eventId" />
+		<result column="user_id" jdbcType="VARCHAR" property="userId" />
+		<result column="header_img" jdbcType="VARCHAR" property="headerImg"/> 
+		<result column="nick" jdbcType="VARCHAR" property="nick" />
+		<result column="create_date" property="createDate"/>
+	</resultMap>
+	
+	<insert id="save" parameterType="com.icloud.model.event.EventFollow">
+
+		insert into t_event_follow (id, event_id, user_id,header_img,nick,create_date
+		)
+		values (replace(uuid(),'-',''), #{eventId,jdbcType=VARCHAR},
+		#{userId,jdbcType=VARCHAR},
+		#{headerImg,jdbcType=VARCHAR},
+		#{nick,jdbcType=VARCHAR},#{createDate,jdbcType=VARCHAR}
+		)
+	</insert>
+	<update id="update" parameterType="com.icloud.model.event.EventFollow">
+		update t_event_follow
+		<set>
+			<if test="null != userId">
+				user_id=#{userId},
+			</if>
+			<if test="null != eventId">
+				event_id=#{eventId},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+	<delete id="deleteByKey" parameterType="String">
+		delete from t_event_follow where id=#{id}
+	</delete>
+	<delete id="deleteByObject" parameterType="com.icloud.model.event.EventFollow">
+		delete from t_event_follow where event_id=#{eventId} and user_id=#{userId}
+	</delete>
+	<select id="findForObject" parameterType="String"
+		resultMap="BaseResultMap">
+		select t.* from t_event_follow t where t.id=#{id}
+	</select>
+	<select id="findForList" parameterType="com.icloud.model.event.EventFollow"
+		resultMap="BaseResultMap">
+		select * from t_event_follow
+		<where>
+			<if test="eventId != null">
+				and event_id=#{eventId}
+			</if>
+			<if test="userId != null">
+				and event_id=#{userId}
+			</if>
+		</where>
+		ORDER BY create_date DESC
+	</select>
+	<select id="findCount" parameterType="com.icloud.model.event.EventFollow"
+		resultType="Integer">
+		select count(1) from t_event_follow
+		<where>
+			<if test="eventId != null">
+				and event_id=#{eventId}
+			</if>
+			<if test="userId != null">
+				and user_id=#{userId}
+			</if>
+		</where>
+	</select>
+
+
+</mapper>

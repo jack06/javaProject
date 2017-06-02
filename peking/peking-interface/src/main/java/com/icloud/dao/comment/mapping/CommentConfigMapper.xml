@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icloud.dao.comment.CommentConfigMapper">
+	<resultMap id="BaseResultMap" type="com.icloud.model.comments.CommentConfig">
+		<result column="id" jdbcType="VARCHAR" property="id" />
+		<result column="event_id" jdbcType="VARCHAR" property="eventId" />
+		<result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+		<result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+		<result column="model" jdbcType="VARCHAR" property="model" />
+		<result column="is_open" jdbcType="VARCHAR" property="isOpen" />
+		<result column="is_allow_type" jdbcType="VARCHAR" property="isAllowType" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, event_id, start_time,
+		end_time,is_open,model,is_allow_type
+	</sql>
+
+	<delete id="deleteByKey" parameterType="String">
+		delete from
+		t_comment_config
+		where id=${id}
+	</delete>
+
+	<insert id="save" parameterType="com.icloud.model.comments.CommentConfig">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			select replace(uuid(),'-','') from dual
+		</selectKey>
+		insert into t_comment_config (id, event_id, start_time,
+		end_time,is_open,model,is_allow_type) values
+		(#{id,jdbcType=VARCHAR},
+		#{eventId,jdbcType=VARCHAR},
+		#{startTime,jdbcType=TIMESTAMP},
+		#{endTime,jdbcType=TIMESTAMP},#{isOpen,jdbcType=VARCHAR},#{model,jdbcType=VARCHAR},#{isAllowType,jdbcType=VARCHAR})
+	</insert>
+
+	<update id="update" parameterType="com.icloud.model.comments.CommentConfig">
+		update t_comment_config
+		<set>
+			<if test="model != null">
+				model = #{model,jdbcType=VARCHAR},
+			</if>
+			<if test="isOpen != null">
+				is_open = #{isOpen,jdbcType=VARCHAR},
+			</if>
+			<if test="isOpen != null">
+				is_open = #{isOpen,jdbcType=VARCHAR},
+			</if>
+			<if test="startTime != null">
+				start_time = #{startTime},
+			</if>
+			<if test="endTime != null">
+				end_time = #{startTime},
+			</if>
+			<if test="isAllowType != null">
+				is_allow_type = #{isAllowType},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<select id="findForObject" parameterType="String" resultMap="BaseResultMap">
+		select t.* from t_comment_config t where t.id=#{id}
+	</select>
+	<select id="findForList" parameterType="com.icloud.model.comments.CommentConfig"
+		resultMap="BaseResultMap">
+		select t.* from t_comment_config t
+		<where>
+			<if test="eventId != null">
+				and t.event_id = #{eventId,jdbcType=VARCHAR}
+			</if>
+		</where>
+
+	</select>
+	<select id="findCount" parameterType="com.icloud.model.comments.CommentConfig"
+		resultType="Integer">
+		select count(1) from t_comment_config t
+		<where>
+			<if test="eventId != null">
+				t.event_id = #{eventId,jdbcType=VARCHAR},
+			</if>
+		</where>
+	</select>
+	
+</mapper>

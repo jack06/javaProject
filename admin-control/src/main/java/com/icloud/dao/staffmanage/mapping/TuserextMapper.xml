@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icloud.dao.staffmanage.TuserextMapper" >
+  <resultMap id="BaseResultMap" type="com.icloud.model.staffmanage.Tuserext" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="word_no" property="wordNo" jdbcType="VARCHAR" />
+    <result column="departments" property="departments" jdbcType="VARCHAR" />
+    <result column="native_place" property="nativePlace" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="VARCHAR" />
+    <result column="professional" property="professional" jdbcType="VARCHAR" />
+    <result column="grade" property="grade" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="is_certification" property="isCertification" jdbcType="VARCHAR" />
+    <result column="role_id" property="roleId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="declaration" property="declaration" jdbcType="VARCHAR" />
+    <result column="hobby" property="hobby" jdbcType="VARCHAR" />
+    <result column="photo" property="photo" jdbcType="VARCHAR" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    <result column="is_need_verify" property="isNeedVerify" jdbcType="VARCHAR" />
+    <result column="open_id" property="openId" jdbcType="VARCHAR" />
+    <result column="nick" property="nick" jdbcType="VARCHAR" /> 
+    <result column="wx_head_img" property="wxHeadImg" jdbcType="VARCHAR" /> 
+  </resultMap>
+    <sql id="Base_Column_List" >
+    t.id, t.real_name, t.word_no, t.departments, t.native_place, t.gender, t.professional, t.grade, t.phone, 
+    t.is_certification, t.role_id, t.user_id, t.declaration, t.hobby, t.photo,a.role_name,a.is_need_verify,
+    b.open_id,b.nick,b.wx_head_img
+  </sql>
+  
+   <sql id="Tuserext_Column_List" >
+    t.id, t.real_name, t.word_no, t.departments, t.native_place, t.gender, t.professional, t.grade, t.phone, 
+    t.is_certification, t.role_id, t.user_id, t.declaration, t.hobby, t.photo
+  </sql>
+	
+	<select id="findForList" resultMap="BaseResultMap" parameterType="com.icloud.model.staffmanage.Tuserext" >
+	select 
+	<include refid="Base_Column_List" /> 
+	from t_user_ext t
+	LEFT JOIN t_user_role a ON a.id=t.role_id 
+    LEFT JOIN t_user b ON b.id=t.user_id
+	 <trim prefixOverrides="and">
+		<where>
+			<if test="realName  != null and realName  != ''">
+				and t.real_name like concat(concat('%',#{realName}),'%')
+			</if>
+			<if test="wordNo  != null and wordNo  != ''">
+				and t.word_no like concat(concat('%',#{wordNo}),'%')
+			</if>
+			<if test="phone  != null and phone  != ''">
+				and t.phone like concat(concat('%',#{phone}),'%')
+			</if>
+			 and t.user_id != '0'	
+			<if test="isCertification  != null and isCertification  != ''">
+				and t.is_certification like concat(concat('%',#{isCertification}),'%')
+			</if>
+		</where>
+	</trim>
+	    limit #{startRow},#{pageSize}
+	</select>
+	
+	<select id="findCount" resultType="Integer" parameterType="com.icloud.model.staffmanage.Tuserext" >
+	   select count(1) 	
+	   from t_user_ext t
+	   LEFT JOIN t_user_role a ON a.id=t.role_id 
+       LEFT JOIN t_user b ON b.id=t.user_id
+	 <trim prefixOverrides="and">
+		<where>
+			<if test="realName  != null and realName  != ''">
+				and t.real_name like concat(concat('%',#{realName}),'%')
+			</if>
+			<if test="wordNo  != null and wordNo  != ''">
+				and t.word_no like concat(concat('%',#{wordNo}),'%')
+			</if>
+			<if test="phone  != null and phone  != ''">
+				and t.phone like concat(concat('%',#{phone}),'%')
+			</if>
+			 and t.user_id != '0'	
+			<if test="isCertification  != null and isCertification  != ''">
+				and t.is_certification like concat(concat('%',#{isCertification}),'%')
+			</if>
+		</where>
+	</trim>
+  </select>
+  
+  	<select id="findForObject" parameterType="String" resultMap="BaseResultMap">
+	 select 
+	 <include refid="Tuserext_Column_List" /> 
+	  from t_user_ext t where t.id=#{id}
+	</select>
+
+  <update id="update" parameterType="com.icloud.model.staffmanage.Tuserext">
+		update t_user_ext
+		<set>
+			<if test="isCertification != null">
+				is_certification = #{isCertification,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+ 
+ 
+</mapper>

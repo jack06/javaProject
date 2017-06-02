@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icloud.dao.staffmanage.TuserMapper">
+	<resultMap id="BaseResultMap" type="com.icloud.model.staffmanage.Tuser">
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="open_id" property="openId" jdbcType="VARCHAR" />
+    <result column="nick" property="nick" jdbcType="VARCHAR" />
+    <result column="wx_head_img" property="wxHeadImg" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<select id="findForList" parameterType="com.icloud.model.staffmanage.Tuser"
+		resultMap="BaseResultMap">
+		select t.id, t.open_id, t.nick, t.wx_head_img from
+		t_user t
+		<where>
+			<if test="nick!=null">
+				and t.nick like concat(concat('%',#{nick}),'%')
+			</if>
+		</where>
+	    limit #{startRow},#{pageSize}
+	</select>
+	
+	<select id="findCount" parameterType="com.icloud.model.staffmanage.Tuser"
+		resultType="Integer">
+		select count(1) from t_user t
+		<where>
+			<if test="nick!=null">
+				and t.nick like concat(concat('%',#{nick}),'%')
+			</if>
+		</where>
+	</select>
+</mapper>

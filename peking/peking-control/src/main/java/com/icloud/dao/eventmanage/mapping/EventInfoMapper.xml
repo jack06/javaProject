@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icloud.dao.eventmanage.EventInfoMapper">
+	<resultMap id="resultMap" type="com.icloud.model.eventmanage.EventInfo">
+		<result column="id" jdbcType="VARCHAR" property="id" />
+		<result column="event_name" jdbcType="VARCHAR" property="eventName" />
+		<result column="event_icon" jdbcType="VARCHAR" property="eventPics" />
+		<result column="type_id" jdbcType="VARCHAR" property="typeId" />
+		<result column="is_public" jdbcType="VARCHAR" property="isPublic" />
+		<result column="event_originator" jdbcType="VARCHAR" property="eventOriginator" />
+		<result column="start_date" jdbcType="TIMESTAMP" property="startDate" />
+		<result column="end_date" jdbcType="TIMESTAMP" property="endDate" />
+		<result column="is_cycle" jdbcType="VARCHAR" property="isCycle" />
+		<result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="event_status" jdbcType="VARCHAR" property="eventStatus" />
+		<result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+		<result column="address" jdbcType="VARCHAR" property="address" />
+		<result column="longitude" jdbcType="VARCHAR" property="longitude" />
+		<result column="latitude" jdbcType="VARCHAR" property="latitude" />
+		<result column="publisher_type" jdbcType="VARCHAR" property="publisherType" />
+	   <result column="is_top" jdbcType="VARCHAR" property="isTop"/>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, event_name, event_icon, type_id, is_public,
+		event_originator,
+		event_participants,
+		start_date, end_date, is_cycle,
+		create_date,
+		event_status,
+		parent_id,address,longitude,latitude,publisher_type
+	</sql>
+<insert id="save" parameterType="com.icloud.model.eventmanage.EventInfo">
+		<selectKey keyProperty="id" order="BEFORE" resultType="String">
+			select
+			replace(uuid(),'-','') from dual
+		</selectKey>
+		insert into t_event_info (
+		id, event_name, event_icon, type_id,
+		is_public, event_originator,
+		start_date, end_date,
+		is_cycle,
+		create_date,
+		event_status,
+		parent_id,address,longitude,latitude,publisher_type,is_top
+		) values(
+		#{id,jdbcType=VARCHAR},
+		#{eventName,jdbcType=VARCHAR},
+		#{eventPics,jdbcType=VARCHAR},
+		#{typeId,jdbcType=VARCHAR},
+		#{isPublic,jdbcType=VARCHAR},
+		#{eventOriginator,jdbcType=VARCHAR},
+		#{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP},
+		#{isCycle,jdbcType=VARCHAR},
+		#{createDate,jdbcType=TIMESTAMP},
+		#{eventStatus,jdbcType=VARCHAR},
+		#{parentId,jdbcType=VARCHAR},
+		#{address,jdbcType=TIMESTAMP},
+		#{longitude,jdbcType=VARCHAR},
+		#{latitude,jdbcType=VARCHAR},
+		#{publisherType,jdbcType=VARCHAR},
+#{isTop,jdbcType=VARCHAR}
+		)
+
+	</insert>
+
+	<update id="update" parameterType="com.icloud.model.eventmanage.EventInfo">
+		update t_event_info
+		<set>
+			<if test="eventName != null">
+				event_name = #{eventName,jdbcType=VARCHAR},
+			</if>
+			<if test="eventPics != null">
+				event_icon = #{eventPics,jdbcType=VARCHAR},
+			</if>
+			<if test="typeId != null">
+				type_id = #{typeId,jdbcType=VARCHAR},
+			</if>
+			<if test="isPublic != null">
+				is_public = #{isPublic,jdbcType=VARCHAR},
+			</if>
+			<if test="eventOriginator != null">
+				event_originator = #{eventOriginator,jdbcType=VARCHAR},
+			</if>
+			<if test="startDate != null">
+				start_date = #{startDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endDate != null">
+				end_date = #{endDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="isCycle != null">
+				is_cycle = #{isCycle,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="eventStatus != null">
+				event_status = #{eventStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="parentId != null">
+				parent_id = #{parentId,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=TIMESTAMP},
+			</if>
+			<if test="longitude != null">
+				longitude = #{longitude,jdbcType=VARCHAR},
+			</if>
+			<if test="latitude != null">
+				latitude = #{latitude,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<delete id="deleteByKey" parameterType="String">
+		delete from t_event_info
+		where id=#{id}
+	</delete>
+	<select id="findForObject" parameterType="String" resultMap="resultMap">
+		select t.* from t_event_info t where t.id=#{id}
+	</select>
+
+	<select id="findForList" parameterType="com.icloud.model.eventmanage.EventInfo"
+		resultMap="resultMap">
+		select * from t_event_info
+		<where>
+			<if test="eventName != null">
+				event_name = like concat(concat('%',#{eventName}),'%')
+			</if>
+			<if test="typeId != null">
+				and type_id = #{typeId,jdbcType=VARCHAR}
+			</if>
+			<if test="isPublic != null">
+				and is_public = #{isPublic,jdbcType=VARCHAR}
+			</if>
+			<if test="eventOriginator != null">
+				and event_originator =
+				#{eventOriginator,jdbcType=VARCHAR}
+			</if>
+
+			<if test="publisherType != null">
+				and publisher_type =
+				#{publisherType,jdbcType=VARCHAR}
+			</if>
+			<if test="isCycle != null">
+				and is_cycle = #{isCycle,jdbcType=VARCHAR}
+			</if>
+			<if test="eventStatus != null">
+				and event_status = #{eventStatus,jdbcType=VARCHAR}
+			</if>
+			<if test="parentId != null">
+				and parent_id = #{parentId,jdbcType=VARCHAR}
+			</if>
+			<if test="startDate != null and endDate != null">
+				and start_date BETWEEN DATE_FORMAT(#{startDate},'%Y-%m-%d
+				%H:%i:%s') and DATE_FORMAT(#{endDate},'%Y-%m-%d %H:%i:%s')
+			</if>
+		</where>
+		order by create_date desc
+	</select>
+	<!-- 通过用户角色查找 -->
+	<select id="findListByRole" parameterType="com.icloud.model.eventmanage.EventInfo"
+		resultMap="resultMap">
+		select ei.* from t_event_info ei
+		LEFT JOIN t_event_allow_role ear
+		on ei.id=ear.event_id
+		<where>
+			<if test="eventName != null">
+				and ei.event_name = like
+				concat(concat('%',#{eventName}),'%')
+			</if>
+			<if test="typeId != null">
+				and ei.type_id = #{typeId,jdbcType=VARCHAR}
+			</if>
+			<if test="isPublic != null">
+				and ei.is_public = #{isPublic,jdbcType=VARCHAR}
+			</if>
+			<if test="eventOriginator != null">
+				and ei.event_originator =
+				#{eventOriginator,jdbcType=VARCHAR}
+			</if>
+
+			<if test="publisherType != null">
+				and ei.publisher_type =
+				#{publisherType,jdbcType=VARCHAR}
+			</if>
+			<if test="isCycle != null">
+				and ei.is_cycle = #{isCycle,jdbcType=VARCHAR}
+			</if>
+			<if test="eventStatus != null">
+				and ei.event_status = #{eventStatus,jdbcType=VARCHAR}
+			</if>
+			<if test="parentId != null">
+				and ei.parent_id = #{parentId,jdbcType=VARCHAR}
+			</if>
+			<if test="startDate != null and endDate != null">
+				and ei.start_date BETWEEN
+				DATE_FORMAT(#{startDate},'%Y-%m-%d %H:%i:%s') and
+				DATE_FORMAT(#{endDate},'%Y-%m-%d %H:%i:%s')
+			</if>
+		</where>
+		order by ei.create_date asc
+	</select>
+
+	<select id="findUserFollowList" parameterType="com.icloud.model.eventmanage.EventInfo"
+		resultMap="resultMap">
+		select ei.* from t_event_info ei ,t_event_follow ef
+		<where>
+			ef.event_id=ei.id and ef.user_id=#{eventOriginator}
+			<if test="eventName != null">
+				and ei.event_name = like
+				concat(concat('%',#{eventName}),'%')
+			</if>
+			<if test="typeId != null">
+				and ei.type_id = #{typeId,jdbcType=VARCHAR}
+			</if>
+			<if test="isPublic != null">
+				and ei.is_public = #{isPublic,jdbcType=VARCHAR}
+			</if>
+			<if test="eventOriginator != null">
+				and ei.event_originator =
+				#{eventOriginator,jdbcType=VARCHAR}
+			</if>
+
+			<if test="publisherType != null">
+				and ei.publisher_type =
+				#{publisherType,jdbcType=VARCHAR}
+			</if>
+			<if test="isCycle != null">
+				and ei.is_cycle = #{isCycle,jdbcType=VARCHAR}
+			</if>
+			<if test="eventStatus != null">
+				and ei.event_status = #{eventStatus,jdbcType=VARCHAR}
+			</if>
+			<if test="parentId != null">
+				and ei.parent_id = #{parentId,jdbcType=VARCHAR}
+			</if>
+			<if test="startDate != null and endDate != null">
+				and ei.start_date BETWEEN
+				DATE_FORMAT(#{startDate},'%Y-%m-%d %H:%i:%s') and
+				DATE_FORMAT(#{endDate},'%Y-%m-%d %H:%i:%s')
+			</if>
+		</where>
+
+	</select>
+
+	<select id="findCount" parameterType="com.icloud.model.eventmanage.EventInfo"
+		resultType="Integer">
+		select count(1) from t_event_info
+		<where>
+			<if test="eventName != null">
+				event_name = like concat(concat('%',#{eventName}),'%')
+			</if>
+			<if test="typeId != null">
+				and type_id = #{typeId,jdbcType=VARCHAR}
+			</if>
+			<if test="isPublic != null">
+				and is_public = #{isPublic,jdbcType=VARCHAR}
+			</if>
+			<if test="eventOriginator != null">
+				and event_originator =
+				#{eventOriginator,jdbcType=VARCHAR}
+			</if>
+			<if test="eventParticipants != null">
+				and event_participants =
+				#{eventParticipants,jdbcType=VARCHAR}
+			</if>
+			<if test="isCycle != null">
+				and is_cycle = #{isCycle,jdbcType=VARCHAR}
+			</if>
+			<if test="eventStatus != null">
+				and event_status = #{eventStatus,jdbcType=VARCHAR}
+			</if>
+			<if test="parentId != null">
+				and parent_id = #{parentId,jdbcType=VARCHAR}
+			</if>
+		</where>
+
+	</select>
+
+</mapper>

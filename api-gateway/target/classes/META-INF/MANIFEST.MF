@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: api-gateway
+Implementation-Version: 1.0.0
+Built-By: chunyan
+Implementation-Vendor-Id: com.didispace
+Build-Jdk: 1.8.0_111
+Implementation-URL: http://projects.spring.io/spring-boot/api-gateway/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+

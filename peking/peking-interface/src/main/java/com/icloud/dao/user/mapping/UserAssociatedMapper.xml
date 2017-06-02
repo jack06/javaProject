@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icloud.dao.user.UserAssociatedMapper">
+	<resultMap id="BaseResultMap" type="com.icloud.model.user.UserAssociated">
+		<result column="slave_user_id" jdbcType="VARCHAR" property="slaveUserId" />
+		<result column="master_user_id" jdbcType="VARCHAR" property="masterUserId" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		slave_user_id,master_user_id
+	</sql>
+
+	<delete id="deleteByUser" parameterType="com.icloud.model.user.UserAssociated">
+		delete from t_user_associated
+		where (slave_user_id=$slaveUserId} and master_user_id=#{masterUserId})
+		or (master_user_id=$slaveUserId} and slave_user_id=#{masterUserId})
+	</delete>
+
+	<insert id="save" parameterType="com.icloud.model.user.User">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			select replace(uuid(),'-','') from dual
+		</selectKey>
+		insert into t_user_associated (master_user_id,slave_user_id) values
+		(#{masterUserId,jdbcType=VARCHAR}, #{slaveUserId,jdbcType=VARCHAR})
+	</insert>
+
+	<select id="checkIsFriend" parameterType="com.icloud.model.user.UserAssociated">
+	  select count(1) from  t_user_associated where (slave_user_id=$slaveUserId} and master_user_id=#{masterUserId})
+		or (master_user_id=$slaveUserId} and slave_user_id=#{masterUserId})
+	</select>
+	<!-- 查询好友列表 -->
+	<select id="selectFriendList" parameterType="String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_user_associated
+		<where>
+		  <if test="masterUserId!=null">
+				or master_user_id =#{userId} 
+		  </if>
+		 <if test="slaveUserId!=null">
+				or slave_user_id=#{userId}
+		  </if>
+		</where>
+	</select>  
+ </mapper>

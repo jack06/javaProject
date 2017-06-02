@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icloud.dao.event.EventTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.icloud.model.event.EventType" >
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="type_name" property="typeName" jdbcType="VARCHAR" />
+    <result column="type_mark" property="typeMark" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="sort_num" property="sortNum" jdbcType="INTEGER" />
+    <result column="type_icon" property="typeIcon" jdbcType="VARCHAR"/>
+  </resultMap>
+  <select id="findAll" resultMap="BaseResultMap">
+    select * from t_event_type order by sort_num
+  </select>
+ <select id="findByKey" parameterType="String" resultMap="BaseResultMap">
+   select * from   t_event_type where id=#{id}
+ </select>
+</mapper>

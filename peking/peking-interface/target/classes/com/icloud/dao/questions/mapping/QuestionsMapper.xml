@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icloud.dao.questions.QuestionsMapper">
+	<resultMap id="BaseResultMap" type="com.icloud.model.questions.Questions">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="question_type" property="questionType"
+			jdbcType="VARCHAR" />
+		<result column="question_content" property="questionContent"
+			jdbcType="VARCHAR" />
+		<result column="questionnaire_id" property="questionnaireId"
+			jdbcType="VARCHAR" />
+		<result column="question_no" property="questionNo" jdbcType="INTEGER" />
+	    <collection property="optionList" column="id" select="com.icloud.dao.questions.QuestionOptionsMapper.selectByQuestion"></collection>
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, question_type, question_content, questionnaire_id, question_no
+	</sql>
+
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<!-- 找出最大的問題編號 -->
+	<select id="selectMaxNo" resultType="Integer" parameterType="String">
+		select IFNULL(max(question_no),0) from t_questions where questionnaire_id=#{questionnaireId} group by questionnaire_id
+	</select>
+
+	<select id="selectByExample" parameterType="com.icloud.common.QueryBuilder"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'true' as QUERYID,
+		<include refid="Base_Column_List" />
+		from t_questions
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+
+	<select id="countByExample" parameterType="com.icloud.common.QueryBuilder"
+		resultType="java.lang.Long">
+		select count(*) from t_questions
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from t_questions
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from t_questions
+		where id = #{id,jdbcType=VARCHAR}
+	</delete>
+	
+	<delete id="deleteByModule" parameterType="String">
+	  delete from t_questions where questionnaire_id=#{questionnaireId}
+	</delete>
+	<insert id="insert" parameterType="com.icloud.model.questions.Questions">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			select replace(uuid(),'-','') from dual
+		</selectKey>
+		insert into t_questions (id, question_type, question_content,
+		questionnaire_id, question_no)
+		values (#{id,jdbcType=VARCHAR}, #{questionType,jdbcType=VARCHAR},
+		#{questionContent,jdbcType=VARCHAR},
+		#{questionnaireId,jdbcType=VARCHAR}, #{questionNo,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective" parameterType="com.icloud.model.questions.Questions">
+		insert into t_questions
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="questionType != null">
+				question_type,
+			</if>
+			<if test="questionContent != null">
+				question_content,
+			</if>
+			<if test="questionnaireId != null">
+				questionnaire_id,
+			</if>
+			<if test="questionNo != null">
+				question_no,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=VARCHAR},
+			</if>
+			<if test="questionType != null">
+				#{questionType,jdbcType=VARCHAR},
+			</if>
+			<if test="questionContent != null">
+				#{questionContent,jdbcType=VARCHAR},
+			</if>
+			<if test="questionnaireId != null">
+				#{questionnaireId,jdbcType=VARCHAR},
+			</if>
+			<if test="questionNo != null">
+				#{questionNo,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.icloud.model.questions.Questions">
+		update t_questions
+		<set>
+			<if test="questionType != null">
+				question_type = #{questionType,jdbcType=VARCHAR},
+			</if>
+			<if test="questionContent != null">
+				question_content = #{questionContent,jdbcType=VARCHAR},
+			</if>
+			<if test="questionnaireId != null">
+				questionnaire_id = #{questionnaireId,jdbcType=VARCHAR},
+			</if>
+			<if test="questionNo != null">
+				question_no = #{questionNo,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.icloud.model.questions.Questions">
+		update t_questions
+		set question_type = #{questionType,jdbcType=VARCHAR},
+		question_content = #{questionContent,jdbcType=VARCHAR},
+		questionnaire_id = #{questionnaireId,jdbcType=VARCHAR},
+		question_no = #{questionNo,jdbcType=INTEGER}
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icloud.dao.user.UserMapper">
+	<resultMap id="BaseResultMap" type="com.icloud.model.user.User">
+		<result column="id" jdbcType="VARCHAR" property="id" />
+		<result column="open_id" jdbcType="VARCHAR" property="openId" />
+		<result column="nick" jdbcType="VARCHAR" property="nick" />
+		<result column="wx_head_img" jdbcType="VARCHAR" property="wxHeadImg" />
+		<collection property="userExt" column="id" select="com.icloud.dao.user.UserExtMapper.findByUser"></collection>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, open_id, nick, wx_head_img
+	</sql>
+
+	<delete id="deleteByKey" parameterType="String">
+		delete from t_user
+		where id=${id}
+	</delete>
+
+	<insert id="save" parameterType="com.icloud.model.user.User">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			select replace(uuid(),'-','') from dual
+		</selectKey>
+		insert into t_user (id, open_id, nick, wx_head_img) values
+		(#{id,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR},
+		#{nick,jdbcType=VARCHAR}, #{wxHeadImg,jdbcType=VARCHAR})
+	</insert>
+
+	<update id="update" parameterType="com.icloud.model.user.User">
+		update t_user
+		<set>
+			<if test="openId != null">
+				open_id = #{openId,jdbcType=VARCHAR},
+			</if>
+			<if test="nick != null">
+				nick = #{nick,jdbcType=VARCHAR},
+			</if>
+			<if test="wxHeadImg != null">
+				wx_head_img = #{wxHeadImg,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<select id="findForObject" parameterType="String" resultMap="BaseResultMap">
+		select t.id, t.open_id, t.nick, t.wx_head_img from t_user t
+		<where>
+		  <if test="nick!=null">
+				and t.nick like concat(concat('%',#{nick}),'%')
+		  </if>
+		 <if test="openId!=null">
+				and t.open_id=#{openId}
+		  </if>
+		</where>
+	</select>
+   
+    <select id="findForList" parameterType="com.icloud.model.user.User" resultMap="BaseResultMap">
+       select t.id, t.open_id, t.nick, t.wx_head_img from t_user t
+       <where>
+		  <if test="nick!=null">
+				and t.nick like concat(concat('%',#{nick}),'%')
+		  </if>
+		 <if test="openId!=null">
+				and t.open_id like concat(concat('%',#{openId}),'%')
+		  </if>
+		</where>
+    
+    </select>
+    
+    <select id="findCount" parameterType="com.icloud.model.user.User" resultType="Integer">
+       select count(1) from t_user t
+       <where>
+		  <if test="nick!=null">
+				and t.nick like concat(concat('%',#{nick}),'%')
+		  </if>
+		 <if test="openId!=null">
+				and t.open_id like concat(concat('%',#{openId}),'%')
+		  </if>
+		</where>
+    </select>
+
+    <select id="findByOpenId" parameterType="String" resultMap="BaseResultMap">
+       select t.id, t.open_id, t.nick, t.wx_head_img from t_user t 
+       where t.open_id=#{openId}
+    </select>
+
+</mapper>

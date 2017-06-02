@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icloud.dao.doubleChoice.CompanyDetailsMapper">
+	<resultMap id="BaseResultMap" type="com.icloud.model.doubleChoice.CompanyDetails">
+		<result column="id" jdbcType="VARCHAR" property="id" />
+		<result column="company_name" jdbcType="VARCHAR" property="companyName" />
+		<result column="details" jdbcType="VARCHAR" property="details" />
+		<result column="event_id" jdbcType="VARCHAR" property="eventId" />
+		<result column="event_name" jdbcType="VARCHAR" property="eventName" />
+
+	</resultMap>
+
+	<insert id="save" parameterType="com.icloud.model.doubleChoice.CompanyDetails">
+		insert into t_company_details
+		(id,company_name,details,event_id,event_name
+		)
+		values
+		(replace(uuid(),'-',''),#{companyName,jdbcType=VARCHAR},#{details,jdbcType=VARCHAR},
+		#{eventId,jdbcType=VARCHAR},#{eventName,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<select id="selectNameList" parameterType="String" resultMap="BaseResultMap">
+		select id,company_name from t_company_details where event_id=#{eventId}
+	</select>
+	<select id="findByKey" parameterType="String" resultMap="BaseResultMap">
+		select * from t_company_details where id=#{id}
+	</select>
+	<insert id="batchInsert" parameterType="java.util.List">
+		INSERT INTO t_company_details
+		(id,company_name,details,event_id,event_name
+		)
+		VALUES
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(replace(uuid(),'-',''),#{item.companyName,jdbcType=VARCHAR},#{item.details,jdbcType=VARCHAR},
+			#{item.eventId,jdbcType=VARCHAR},#{item.eventName,jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+
+</mapper>

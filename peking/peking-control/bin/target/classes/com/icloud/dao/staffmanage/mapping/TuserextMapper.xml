@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icloud.dao.staffmanage.TuserextMapper" >
+  <resultMap id="BaseResultMap" type="com.icloud.model.staffmanage.Tuserext" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="word_no" property="wordNo" jdbcType="VARCHAR" />
+    <result column="departments" property="departments" jdbcType="VARCHAR" />
+    <result column="native_place" property="nativePlace" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="VARCHAR" />
+    <result column="professional" property="professional" jdbcType="VARCHAR" />
+    <result column="grade" property="grade" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="is_certification" property="isCertification" jdbcType="VARCHAR" />
+    <result column="role_id" property="roleId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, real_name, word_no, departments, native_place, gender, professional, grade, phone, 
+    is_certification, role_id, user_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_user_ext
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_user_ext
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.icloud.model.staffmanage.Tuserext" >
+    insert into t_user_ext (id, real_name, word_no, 
+      departments, native_place, gender, 
+      professional, grade, phone, 
+      is_certification, role_id, user_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, #{wordNo,jdbcType=VARCHAR}, 
+      #{departments,jdbcType=VARCHAR}, #{nativePlace,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, 
+      #{professional,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{isCertification,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.icloud.model.staffmanage.Tuserext" >
+    insert into t_user_ext
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="realName != null" >
+        real_name,
+      </if>
+      <if test="wordNo != null" >
+        word_no,
+      </if>
+      <if test="departments != null" >
+        departments,
+      </if>
+      <if test="nativePlace != null" >
+        native_place,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="professional != null" >
+        professional,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="isCertification != null" >
+        is_certification,
+      </if>
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="wordNo != null" >
+        #{wordNo,jdbcType=VARCHAR},
+      </if>
+      <if test="departments != null" >
+        #{departments,jdbcType=VARCHAR},
+      </if>
+      <if test="nativePlace != null" >
+        #{nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="professional != null" >
+        #{professional,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="isCertification != null" >
+        #{isCertification,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null" >
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.icloud.model.staffmanage.Tuserext" >
+    update t_user_ext
+    <set >
+      <if test="realName != null" >
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="wordNo != null" >
+        word_no = #{wordNo,jdbcType=VARCHAR},
+      </if>
+      <if test="departments != null" >
+        departments = #{departments,jdbcType=VARCHAR},
+      </if>
+      <if test="nativePlace != null" >
+        native_place = #{nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="professional != null" >
+        professional = #{professional,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="isCertification != null" >
+        is_certification = #{isCertification,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null" >
+        role_id = #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.icloud.model.staffmanage.Tuserext" >
+    update t_user_ext
+    set real_name = #{realName,jdbcType=VARCHAR},
+      word_no = #{wordNo,jdbcType=VARCHAR},
+      departments = #{departments,jdbcType=VARCHAR},
+      native_place = #{nativePlace,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=VARCHAR},
+      professional = #{professional,jdbcType=VARCHAR},
+      grade = #{grade,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      is_certification = #{isCertification,jdbcType=VARCHAR},
+      role_id = #{roleId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

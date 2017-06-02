@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icloud.dao.eventmanage.EventModuleMapper">
+	<resultMap id="BaseResultMap" type="com.icloud.model.eventmanage.EventModule">
+		<result column="event_id" jdbcType="VARCHAR" property="eventId" />
+		<result column="module_id" jdbcType="VARCHAR" property="moduleId" />
+		<result column="module_label" jdbcType="VARCHAR" property="moduleLabel" />
+	</resultMap>
+	
+	
+	<select id="findForList" parameterType="String"
+		resultMap="BaseResultMap">
+		select * from t_event_module where event_id=#{eventId} order by module_label asc
+	</select>
+	
+</mapper>

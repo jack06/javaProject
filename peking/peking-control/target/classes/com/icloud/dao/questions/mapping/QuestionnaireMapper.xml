@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icloud.dao.questions.QuestionnaireMapper">
+	<resultMap id="BaseResultMap" type="com.icloud.model.questions.Questionnaire">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="event_id" jdbcType="VARCHAR" property="eventId" />
+		<result column="is_open" jdbcType="VARCHAR" property="isOpen" />
+		<result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+		<result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+		<result column="user_type" jdbcType="VARCHAR" property="userType" />
+		<result column="title" jdbcType="VARCHAR" property="title" />
+		<result column="description" jdbcType="VARCHAR" property="description" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, event_id, is_open, start_time, end_time, user_type, title,
+		description
+	</sql>
+
+	<select id="findForList" parameterType="String"
+		resultMap="BaseResultMap">
+		select cc.* from t_event_info ei,t_questionnaire cc ,t_event_module
+		em where
+		em.module_id=cc.id and cc.event_id=ei.id and ei.id=#{eventId}
+	</select>
+
+</mapper>

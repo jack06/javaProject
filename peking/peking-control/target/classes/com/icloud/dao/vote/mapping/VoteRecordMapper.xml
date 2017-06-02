@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icloud.dao.vote.VoteRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.icloud.model.vote.VoteRecord" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="event_id" property="eventId" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="vote_user" property="voteUser" jdbcType="VARCHAR" />
+    <result column="option_id" property="optionId" jdbcType="VARCHAR" />
+    <result column="module_id" property="moduleId" jdbcType="VARCHAR" />
+    <result column="nick" property="nick" jdbcType="VARCHAR" />
+    <result column="header_img" property="headerImg" jdbcType="VARCHAR" />
+    <collection property="option" column="option_id" select="com.icloud.dao.vote.VoteOptionMapper.findByKey"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, event_id, create_time, vote_user, option_id, module_id
+  </sql>
+  
+  <select id="selectOptionCount" parameterType="com.icloud.model.vote.VoteRecord" resultType="Integer">
+     select count(1) from t_vote_record
+      <where>
+        <if test="null!=moduleId">
+           and module_id=#{moduleId}
+        </if>
+        <if test="null!=optionId">
+         and option_id=#{optionId}
+        </if>
+      </where>
+  </select>
+ <select id="findList" parameterType="String" resultMap="BaseResultMap">
+     select * from t_vote_record where module_id=#{moduleId}
+ </select>
+  
+</mapper>

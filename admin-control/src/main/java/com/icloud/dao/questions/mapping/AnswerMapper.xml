@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icloud.dao.questions.AnswerMapper">
+	<resultMap id="BaseResultMap" type="com.icloud.model.questions.Answer">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="questioonnaire_id" property="questioonnaireId"
+			jdbcType="VARCHAR" />
+		<result column="question_id" property="questionId" jdbcType="VARCHAR" />
+		<result column="options_id" property="optionsId" jdbcType="VARCHAR" />
+		<result column="is_correct" property="isCorrect" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" />
+		<collection property="question"
+			select="com.icloud.dao.questions.QuestionsMapper.findByKey" column="question_id" />
+	</resultMap>
+	<resultMap type="com.icloud.model.questions.AnswerRecord" id="answerRecord">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="nick" property="nick" jdbcType="VARCHAR" />
+		<result column="wx_head_img" property="wxHeadImg" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" />
+	</resultMap>
+
+	<select id="findAnswerRecord" parameterType="String" resultMap="answerRecord">
+	   select t2.id,t2.nick,t2.wx_head_img,t1.create_date from t_user t2,
+		(
+		select DISTINCT t1.user_id uid,MAX(t1.create_date) create_date from t_answer t1
+		where t1.questioonnaire_id=#{questioonnaireId} GROUP BY t1.user_id
+		)
+		t1 WHERE t2.id=t1.uid
+	   
+	</select>
+
+	<select id="selectAllByQuestionnaire" parameterType="com.icloud.model.questions.Answer"
+		resultMap="BaseResultMap">
+		SELECT t1.* from t_answer t1,t_questions t2 where  
+		t1.questioonnaire_id=#{questioonnaireId}
+		 and
+		t1.user_id=#{userId} and t2.id=t1.question_id order by t2.question_no asc
+	</select>
+
+</mapper>

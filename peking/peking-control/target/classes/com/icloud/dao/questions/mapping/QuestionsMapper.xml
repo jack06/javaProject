@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icloud.dao.questions.QuestionsMapper">
+	<resultMap id="BaseResultMap" type="com.icloud.model.questions.Questions">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="question_type" property="questionType"
+			jdbcType="VARCHAR" />
+		<result column="question_content" property="questionContent"
+			jdbcType="VARCHAR" />
+		<result column="questionnaire_id" property="questionnaireId"
+			jdbcType="VARCHAR" />
+		<result column="question_no" property="questionNo" jdbcType="INTEGER" />
+	    <collection property="optionList" column="id" select="com.icloud.dao.questions.QuestionOptionsMapper.selectByQuestion"></collection>
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, question_type, question_content, questionnaire_id, question_no
+	</sql>
+	
+    <select id="findByKey" parameterType="String" resultMap="BaseResultMap">
+     select * from t_questions where id=#{id}
+    </select>
+	
+</mapper>
