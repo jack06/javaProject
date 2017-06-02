@@ -1,0 +1,39 @@
+
+#db
+#Oracle
+oracle.driverClass=oracle.jdbc.driver.OracleDriver
+oracle.url=jdbc:oracle:thin:@119.29.34.222:1521:dbmaster
+oracle.username=zltest
+oracle.password=zltest
+#oracle.url=jdbc:oracle:thin:@119.29.25.36:33180:zlwx
+#oracle.username=zlwxdb
+#oracle.password=wc5Jz2Ks$
+controller.error.debug=false
+log4j.logger.java.sql.Connection=DEBUG
+log4j.logger.java.sql.Statement=DEBUG
+log4j.logger.java.sql.PreparedStatement=DEBUG
+
+
+
+# 
+#oracle.type=com.alibaba.druid.pool.DruidDataSource
+#oracle.url = jdbc:mysql://127.0.0.1:3306/mealsystem?useUnicode=true&characterEncoding=utf-8
+#oracle.username = root
+#oracle.password = 123456
+#oracle.driverClassName = com.mysql.jdbc.Driver
+ 
+#
+oracle.initialSize=5
+oracle.minIdle=5
+oracle.maxActive=200
+oracle.maxWait=60000
+oracle.timeBetweenEvictionRunsMillis=60000
+oracle.minEvictableIdleTimeMillis=300000
+oracle.validationQuery=SELECT 1 FROM DUAL
+oracle.testWhileIdle=true
+oracle.testOnBorrow=false
+oracle.testOnReturn=false
+oracle.poolPreparedStatements=true
+oracle.maxPoolPreparedStatementPerConnectionSize=20
+oracle.filters=stat,wall,log4j
+oracle.connectionProperties=druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000

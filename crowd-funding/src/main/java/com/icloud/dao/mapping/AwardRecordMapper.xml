@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icloud.dao.AwardRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.icloud.model.AwardRecord" >
+    <id column="ID" property="id" jdbcType="NUMERIC" />
+    <result column="ORDER_ID" property="orderId" jdbcType="NUMERIC" />
+    <result column="RAISE_ID" property="raiseId" jdbcType="NUMERIC" />
+    <result column="USER_ID" property="userId" jdbcType="NUMERIC" />
+    <result column="USER_NICK" property="userNick" jdbcType="VARCHAR" />
+    <result column="DELIVERY_ADDRESS" property="deliveryAddress" jdbcType="VARCHAR" />
+    <result column="DELIVERY_STATUS" property="deliveryStatus" jdbcType="VARCHAR" />
+    <result column="COURIER_NAME" property="courierName" jdbcType="VARCHAR" />
+    <result column="COURIER_NO" property="courierNo" jdbcType="VARCHAR" />
+    <result column="DELIVERY_PHONE" property="deliveryPhone" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, ORDER_ID, RAISE_ID, USER_ID, USER_NICK, DELIVERY_ADDRESS, DELIVERY_STATUS, COURIER_NAME, 
+    COURIER_NO, DELIVERY_PHONE, CREATE_DATE, PRODUCT_NAME
+  </sql> 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_AWARD_RECORD
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from T_AWARD_RECORD
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.icloud.model.AwardRecord" >
+  	<selectKey order="BEFORE" keyProperty="id" resultType="java.lang.Long">
+	    	SELECT seq_raise_award_record.NEXTVAL as id FROM DUAL
+	</selectKey>
+    insert into T_AWARD_RECORD (ID, ORDER_ID, RAISE_ID, 
+      USER_ID, USER_NICK, DELIVERY_ADDRESS, 
+      DELIVERY_STATUS, COURIER_NAME, COURIER_NO, 
+      DELIVERY_PHONE, CREATE_DATE, PRODUCT_NAME)
+    values (#{id}, #{orderId,jdbcType=DECIMAL}, #{raiseId,jdbcType=DECIMAL}, 
+      #{userId,jdbcType=DECIMAL}, #{userNick,jdbcType=VARCHAR}, #{deliveryAddress,jdbcType=VARCHAR}, 
+      #{deliveryStatus,jdbcType=VARCHAR}, #{courierName,jdbcType=VARCHAR}, #{courierNo,jdbcType=VARCHAR}, 
+      #{deliveryPhone,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{productName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.icloud.model.AwardRecord" >
+    insert into T_AWARD_RECORD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+      <if test="raiseId != null" >
+        RAISE_ID,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="userNick != null" >
+        USER_NICK,
+      </if>
+      <if test="deliveryAddress != null" >
+        DELIVERY_ADDRESS,
+      </if>
+      <if test="deliveryStatus != null" >
+        DELIVERY_STATUS,
+      </if>
+      <if test="courierName != null" >
+        COURIER_NAME,
+      </if>
+      <if test="courierNo != null" >
+        COURIER_NO,
+      </if>
+      <if test="deliveryPhone != null" >
+        DELIVERY_PHONE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="productName != null" >
+        PRODUCT_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=DECIMAL},
+      </if>
+      <if test="raiseId != null" >
+        #{raiseId,jdbcType=DECIMAL},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=DECIMAL},
+      </if>
+      <if test="userNick != null" >
+        #{userNick,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryAddress != null" >
+        #{deliveryAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryStatus != null" >
+        #{deliveryStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="courierName != null" >
+        #{courierName,jdbcType=VARCHAR},
+      </if>
+      <if test="courierNo != null" >
+        #{courierNo,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryPhone != null" >
+        #{deliveryPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.icloud.model.AwardRecord" >
+    update T_AWARD_RECORD
+    <set >
+      <if test="orderId != null" >
+        ORDER_ID = #{orderId,jdbcType=DECIMAL},
+      </if>
+      <if test="raiseId != null" >
+        RAISE_ID = #{raiseId,jdbcType=DECIMAL},
+      </if>
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=DECIMAL},
+      </if>
+      <if test="userNick != null" >
+        USER_NICK = #{userNick,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryAddress != null" >
+        DELIVERY_ADDRESS = #{deliveryAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryStatus != null" >
+        DELIVERY_STATUS = #{deliveryStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="courierName != null" >
+        COURIER_NAME = #{courierName,jdbcType=VARCHAR},
+      </if>
+      <if test="courierNo != null" >
+        COURIER_NO = #{courierNo,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryPhone != null" >
+        DELIVERY_PHONE = #{deliveryPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productName != null" >
+        PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.icloud.model.AwardRecord" >
+    update T_AWARD_RECORD
+    set ORDER_ID = #{orderId,jdbcType=DECIMAL},
+      RAISE_ID = #{raiseId,jdbcType=DECIMAL},
+      USER_ID = #{userId,jdbcType=DECIMAL},
+      USER_NICK = #{userNick,jdbcType=VARCHAR},
+      DELIVERY_ADDRESS = #{deliveryAddress,jdbcType=VARCHAR},
+      DELIVERY_STATUS = #{deliveryStatus,jdbcType=VARCHAR},
+      COURIER_NAME = #{courierName,jdbcType=VARCHAR},
+      COURIER_NO = #{courierNo,jdbcType=VARCHAR},
+      DELIVERY_PHONE = #{deliveryPhone,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      PRODUCT_NAME = #{productName,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  
+  
+  <resultMap id="ExportResultMap" type="com.icloud.dto.AwardRecordExportExcleDto">
+    <result column="ORDER_ID" property="orderId" jdbcType="NUMERIC" />
+    <result column="RAISE_ID" property="raiseId" jdbcType="NUMERIC" />
+    <result column="USER_ID" property="userId" jdbcType="NUMERIC" />
+    <result column="USER_NICK" property="userNick" jdbcType="VARCHAR" />
+    <result column="DELIVERY_ADDRESS" property="deliveryAddress" jdbcType="VARCHAR" />
+    <result column="DELIVERY_STATUS" property="deliveryStatus" jdbcType="VARCHAR" />
+    <result column="COURIER_NAME" property="courierName" jdbcType="VARCHAR" />
+    <result column="COURIER_NO" property="courierNo" jdbcType="VARCHAR" />
+    <result column="DELIVERY_PHONE" property="deliveryPhone" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="ExportExlceAwardRecord" resultMap="ExportResultMap" parameterType="com.icloud.form.AwardRecordFrom" >
+    select ORDER_ID, RAISE_ID, USER_ID, USER_NICK, DELIVERY_ADDRESS, DELIVERY_STATUS, COURIER_NAME, 
+    COURIER_NO, DELIVERY_PHONE, CREATE_DATE, PRODUCT_NAME
+    from T_AWARD_RECORD
+    <trim prefixOverrides="and">
+	     <where>
+	     	<if test="deliveryStatus != null and deliveryStatus !='' ">
+				 	AND DELIVERY_STATUS = #{deliveryStatus}
+			  </if>
+			  <if test="deliveryPhone != null and deliveryPhone !='' ">
+				 	AND DELIVERY_PHONE = #{deliveryPhone}
+			  </if>
+	     </where>
+	</trim>
+    order by CREATE_DATE desc
+  </select>
+  
+  <resultMap id="BaseVoResultMap" type="com.icloud.vo.AwardRecordVo" >
+    <id column="ID" property="id" jdbcType="NUMERIC" />
+    <result column="ORDER_ID" property="orderId" jdbcType="NUMERIC" />
+    <result column="RAISE_ID" property="raiseId" jdbcType="NUMERIC" />
+    <result column="USER_ID" property="userId" jdbcType="NUMERIC" />
+    <result column="USER_NICK" property="userNick" jdbcType="VARCHAR" />
+    <result column="DELIVERY_ADDRESS" property="deliveryAddress" jdbcType="VARCHAR" />
+    <result column="DELIVERY_STATUS" property="deliveryStatus" jdbcType="VARCHAR" />
+    <result column="COURIER_NAME" property="courierName" jdbcType="VARCHAR" />
+    <result column="COURIER_NO" property="courierNo" jdbcType="VARCHAR" />
+    <result column="DELIVERY_PHONE" property="deliveryPhone" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" />
+    <result column="DELIVERY_TYPE" property="deliveryType" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="listByPage" parameterType="com.icloud.common.QueryBuilder" resultMap="BaseVoResultMap">
+    select 
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    
+    t.ID, t.ORDER_ID, t.RAISE_ID, t.USER_ID, t.USER_NICK, t.DELIVERY_ADDRESS, t.DELIVERY_STATUS, t.COURIER_NAME, 
+    t.COURIER_NO, t.DELIVERY_PHONE, t.CREATE_DATE, t.PRODUCT_NAME, r.DELIVERY_TYPE
+    
+    FROM T_AWARD_RECORD t left join T_ZL_RAISE r on t.RAISE_ID = r.ID 
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    order by CREATE_DATE desc
+  </select>
+  
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  <select id="checkDuplicate" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from T_AWARD_RECORD
+    where 
+    RAISE_ID=#{raiseId,jdbcType=NUMERIC}
+    and ORDER_ID=#{orderId,jdbcType=NUMERIC}
+    and USER_ID=#{userId,jdbcType=NUMERIC}
+  </select>
+  
+  <select id="getDeliveredRecord" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from T_AWARD_RECORD
+    where DELIVERY_STATUS = '1'
+    and COURIER_NO is null
+  </select>
+  
+  <select id="findAwardRecordVoById" resultMap="BaseVoResultMap" parameterType="java.lang.Long" >
+    select 
+    	t.ID, t.ORDER_ID, t.RAISE_ID, t.USER_ID, t.USER_NICK, t.DELIVERY_ADDRESS, t.DELIVERY_STATUS, t.COURIER_NAME, 
+    	t.COURIER_NO, t.DELIVERY_PHONE, t.CREATE_DATE, t.PRODUCT_NAME, r.DELIVERY_TYPE
+    FROM T_AWARD_RECORD t left join T_ZL_RAISE r on t.RAISE_ID = r.ID 
+    where t.ID = #{id,jdbcType=DECIMAL}
+  </select>
+</mapper>

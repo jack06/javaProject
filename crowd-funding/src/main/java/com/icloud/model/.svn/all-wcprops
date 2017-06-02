@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/gxzy/!svn/ver/12957/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/model
+END
+RaiseOrder.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/gxzy/!svn/ver/12153/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/model/RaiseOrder.java
+END
+RaiseOrderItems.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/gxzy/!svn/ver/11397/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/model/RaiseOrderItems.java
+END
+Raise.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/gxzy/!svn/ver/12957/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/model/Raise.java
+END
+LuckyNo.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/gxzy/!svn/ver/11397/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/model/LuckyNo.java
+END
+RaiseMsq.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/gxzy/!svn/ver/11211/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/model/RaiseMsq.java
+END
+WxFans.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/gxzy/!svn/ver/11382/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/model/WxFans.java
+END
+PrizeRecord.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/gxzy/!svn/ver/12340/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/model/PrizeRecord.java
+END
+TestOrder.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/gxzy/!svn/ver/10855/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/model/TestOrder.java
+END
+AwardRecord.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/gxzy/!svn/ver/11904/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/model/AwardRecord.java
+END

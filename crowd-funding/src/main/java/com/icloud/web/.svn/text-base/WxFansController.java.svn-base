@@ -1,0 +1,125 @@
+package com.icloud.web;
+
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.icloud.dto.AddressEditSucessDto;
+import com.icloud.dto.BaseDto;
+import com.icloud.dto.WxFansQueryDto;
+import com.icloud.dto.WxFansRaiseInfoDto;
+import com.icloud.form.WxFansForm;
+import com.icloud.model.Raise;
+import com.icloud.model.RaiseOrder;
+import com.icloud.model.WxFans;
+import com.icloud.service.RaiseOrderService;
+import com.icloud.service.WxFansService;
+import com.icloud.util.RequestUtil;
+
+@RestController
+@RequestMapping(value = "/wxFans")
+public class WxFansController extends BaseController {
+
+	public final static Logger log = LoggerFactory.getLogger(WxFansController.class);
+
+	@Autowired
+	private WxFansService wxFansService;
+	@Autowired
+	private RaiseOrderService raiseOrderService;
+	
+	
+	@RequestMapping(value = "/findWxFansByOpenid", method = { RequestMethod.GET , RequestMethod.POST })
+	public void findWxFansByOpenid(HttpServletRequest request) throws Exception {
+		log.error("------------/findWxFansByOpenid--------------");
+		String openid = RequestUtil.readPostContent(request);  
+		WxFansQueryDto dto = null;
+		try {
+			dto = wxFansService.findWxFansByOpenid(openid);
+		} catch (Exception e) {
+			e.printStackTrace();
+			dto = new WxFansQueryDto("fail","10001","查询失败");
+		}
+		log.error(JSONObject.toJSONString(dto));
+		outObject(JSONObject.toJSONString(dto));
+	}
+	
+	@RequestMapping(value = "/updateWxFansAddress", method = { RequestMethod.GET , RequestMethod.POST })
+	public void updateWxFans(HttpServletRequest request) throws Exception {
+		String jsonText = RequestUtil.readPostContent(request);  
+		System.out.println("jsonText=="+jsonText);
+		WxFans data = JSONObject.parseObject(jsonText, WxFans.class);
+		
+		AddressEditSucessDto dto = null;
+		try {
+			dto = wxFansService.updateWxFansAddress(data);
+		} catch (Exception e) {
+			e.printStackTrace();
+			dto = new AddressEditSucessDto("fail","10001","修改失败");
+		}
+		
+		log.error(JSONObject.toJSONString(dto));
+		System.out.println(JSONObject.toJSONString(dto));
+		outObject(JSONObject.toJSONString(dto));
+	}
+	
+	/**
+	 * 添加粉丝
+	 * @author : ldf
+	 */
+	@RequestMapping(value = "/wxFansAdd")
+	public void raiseAddDo(HttpServletRequest request) throws Exception {
+    	String jsonText = RequestUtil.readPostContent(request);  
+    	log.error("jsonText=="+jsonText);
+		WxFansForm wxFansForm =null;
+		BaseDto  baseDto  = new BaseDto("fail","10001",null);
+		try {
+			if(jsonText!=null && !"".equals(jsonText)){
+				wxFansForm = JSON.parseObject(jsonText,WxFansForm.class);
+				WxFans wxFans = wxFansForm.getWxFans();
+				int result = wxFansService.insert(wxFans);
+				if(result==0){
+					baseDto.setErrorMsg("用户已存在");
+				}else{
+					baseDto.setErrorMsg("保存成功");
+				}
+				baseDto.setResultCode("10000");
+				baseDto.setResultType("success");
+			}
+		} catch (Exception e) {
+		   	 e.printStackTrace();
+			 baseDto.setErrorMsg("新增失败");
+		}
+		outObject(JSONObject.toJSONString(baseDto));		
+    }
+	
+	
+	@RequestMapping(value = "/findWxFansInRaise", method = { RequestMethod.GET , RequestMethod.POST })
+	public void findWxFansInRaise(HttpServletRequest request) throws Exception {
+		String json = RequestUtil.readPostContent(request);
+		WxFansRaiseInfoDto dto = new WxFansRaiseInfoDto("success", "10000", null);
+		try {
+			Map<String, String> params = JSON.parseObject(json, Map.class);
+			WxFansQueryDto wxFansdto = wxFansService.findWxFansByOpenid(params.get("openId"));
+			RaiseOrder raiseOrder = raiseOrderService.getOrderByWxFans(Long.valueOf(params.get("raiseId")), wxFansdto.getWxFans().getId());
+			dto.setUserId(wxFansdto.getWxFans().getId());
+			dto.setNickName(wxFansdto.getWxFans().getNickName());
+			dto.setPhone(wxFansdto.getWxFans().getPhone());
+			dto.setDeliveryAddress(wxFansdto.getWxFans().getDeliveryAddress());
+			dto.setOrderId(raiseOrder.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+			dto = new WxFansRaiseInfoDto("fail","10001","查询失败");
+		}
+		log.error(JSONObject.toJSONString(dto));
+		outObject(JSONObject.toJSONString(dto));
+	}
+}

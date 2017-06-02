@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icloud.dao.RaiseOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.icloud.model.RaiseOrder" >
+    <id column="ID" property="id" jdbcType="NUMERIC" />
+    <result column="USER_NICK" property="userNick" jdbcType="VARCHAR" />
+    <result column="USER_ID" property="userId" jdbcType="NUMERIC" />
+    <result column="RAISE_ID" property="raiseId" jdbcType="NUMERIC" />
+    <result column="TOTAL_LEDOU" property="totalLedou" jdbcType="NUMERIC" />
+    <result column="TOTAL_SHARE" property="totalShare" jdbcType="NUMERIC" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="IS_ALERT" property="isAlert" jdbcType="VARCHAR" />
+  </resultMap>
+  
+    <resultMap id="BaseResultMapVo" type="com.icloud.vo.RecordVo" >
+    <id column="ID" property="id" jdbcType="NUMERIC" />
+    <result column="lucky_no" property="luckyNo" jdbcType="NUMERIC" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="raise_Name" property="raiseName" jdbcType="VARCHAR" />
+    <result column="current_Period" property="currentPeriod" jdbcType="NUMERIC" />
+    <result column="product_Name" property="productName" jdbcType="VARCHAR" />
+    <result column="prize_Amount" property="prizeAmount" jdbcType="NUMERIC" />
+    <result column="current_Status" property="currentStatus" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="raise_id" property="raiseId" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="winStatus" property="winStatus" jdbcType="NUMERIC" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="head_photo_url" property="headPhotoUrl" jdbcType="VARCHAR" />
+    <result column="deliveryStatus" property="deliveryStatus" jdbcType="VARCHAR" />
+    <result column="delivery_address" property="deliveryAddress" jdbcType="VARCHAR" />
+    <result column="really_name" property="userName" jdbcType="VARCHAR" />
+    <result column="current_num" property="currentNum" jdbcType="VARCHAR" />
+    <result column="raise_icon" property="raiseIcon" jdbcType="VARCHAR" />
+    <result column="delivery_type" property="deliveryType" jdbcType="VARCHAR" />
+    <result column="out_time" property="outTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap id="BaseResultOrderVo" type="com.icloud.vo.RecordVo" >
+    <result column="lucky_no" property="luckyNo" jdbcType="NUMERIC" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+  </resultMap>
+ <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  
+   <select id="selectByExample" parameterType="com.icloud.common.QueryBuilder" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from T_RAISE_ORDER
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  
+    <select id="countByExample" parameterType="com.icloud.common.QueryBuilder" resultType="java.lang.Long">
+    select count(*) from T_RAISE_ORDER
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+
+
+  <sql id="Base_Column_List" >
+    ID, USER_NICK, USER_ID, RAISE_ID, TOTAL_LEDOU, TOTAL_SHARE, CREATE_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_RAISE_ORDER
+    where ID = #{id,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from T_RAISE_ORDER
+    where ID = #{id,jdbcType=NUMERIC}
+  </delete>
+  <insert id="insert" parameterType="com.icloud.model.RaiseOrder" >
+    insert into T_RAISE_ORDER (ID, USER_NICK, USER_ID, 
+      RAISE_ID, TOTAL_LEDOU, TOTAL_SHARE, 
+      CREATE_DATE)
+    values (#{id,jdbcType=NUMERIC}, #{userNick,jdbcType=VARCHAR}, #{userId,jdbcType=NUMERIC}, 
+      #{raiseId,jdbcType=NUMERIC}, #{totalLedou,jdbcType=NUMERIC}, #{totalShare,jdbcType=NUMERIC}, 
+      #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  
+    <insert id="insertSelectId" parameterType="com.icloud.model.RaiseOrder" >
+   		<selectKey order="BEFORE" keyProperty="id" resultType="java.lang.Long">
+	    	SELECT seq_raise_order.NEXTVAL as id FROM DUAL
+		</selectKey>
+	    insert into T_RAISE_ORDER (ID, USER_NICK, USER_ID, 
+	      RAISE_ID, TOTAL_LEDOU, TOTAL_SHARE, 
+	      CREATE_DATE)
+	    values (#{id}, #{userNick,jdbcType=VARCHAR}, #{userId,jdbcType=NUMERIC}, 
+	      #{raiseId,jdbcType=NUMERIC}, #{totalLedou,jdbcType=NUMERIC}, #{totalShare,jdbcType=NUMERIC}, 
+	      #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.icloud.model.RaiseOrder" >
+    insert into T_RAISE_ORDER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="userNick != null" >
+        USER_NICK,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="raiseId != null" >
+        RAISE_ID,
+      </if>
+      <if test="totalLedou != null" >
+        TOTAL_LEDOU,
+      </if>
+      <if test="totalShare != null" >
+        TOTAL_SHARE,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=NUMERIC},
+      </if>
+      <if test="userNick != null" >
+        #{userNick,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="raiseId != null" >
+        #{raiseId,jdbcType=NUMERIC},
+      </if>
+      <if test="totalLedou != null" >
+        #{totalLedou,jdbcType=NUMERIC},
+      </if>
+      <if test="totalShare != null" >
+        #{totalShare,jdbcType=NUMERIC},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.icloud.model.RaiseOrder" >
+    update T_RAISE_ORDER
+    <set >
+      <if test="userNick != null" >
+        USER_NICK = #{userNick,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="raiseId != null" >
+        RAISE_ID = #{raiseId,jdbcType=NUMERIC},
+      </if>
+      <if test="totalLedou != null" >
+        TOTAL_LEDOU = #{totalLedou,jdbcType=NUMERIC},
+      </if>
+      <if test="totalShare != null" >
+        TOTAL_SHARE = #{totalShare,jdbcType=NUMERIC},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.icloud.model.RaiseOrder" >
+    update T_RAISE_ORDER
+    set USER_NICK = #{userNick,jdbcType=VARCHAR},
+      USER_ID = #{userId,jdbcType=NUMERIC},
+      RAISE_ID = #{raiseId,jdbcType=NUMERIC},
+      TOTAL_LEDOU = #{totalLedou,jdbcType=NUMERIC},
+      TOTAL_SHARE = #{totalShare,jdbcType=NUMERIC},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=NUMERIC}
+  </update>
+  
+  
+    <select id="selectRecordByPage" resultMap="BaseResultMapVo" parameterType="com.icloud.form.RecordForm">
+   			select raiseOrderItem.lucky_no,raiseOrderItem.create_date,raiseOrderItem.raise_id,raiseOrderItem.order_id,
+				 zlRaise.raise_Name,zlRaise.current_Period,zlRaise.product_Name,
+				 zlRaise.prize_Amount,zlRaise.current_Status,zlRaise.current_num,zlRaise.raise_icon,zlRaise.delivery_type,
+				 raiseOrder.user_id,NVL(prizeRecord.lucky_no,0) as winStatus,
+				 wxFans.phone,wxFans.nick_name,wxFans.head_photo_url,NVL(awardRecord.DELIVERY_STATUS,'no') as deliveryStatus, 
+				 wxFans.delivery_address, wxFans.really_name, zlRaise.out_time
+				 from T_RAISE_ORDER_ITEMS raiseOrderItem left join T_RAISE_ORDER raiseOrder on raiseOrderItem.order_id=raiseOrder.id
+				 left join T_PRIZE_RECORD prizeRecord on raiseOrderItem.order_id=prizeRecord.order_id
+				 left join T_ZL_RAISE zlRaise on raiseOrderItem.raise_id= zlRaise.id
+				 left join zl_wx_fans wxFans on raiseOrderItem.user_id = wxFans.id
+				 left join T_AWARD_RECORD awardRecord on raiseOrderItem.order_id=awardRecord.order_id
+     <trim prefixOverrides="and" >
+       <where>
+		  	<if test="openid != null and openid != ''" >
+		    	and wxFans.open_id = #{openid,jdbcType=VARCHAR}
+		    </if>
+		    <if test="raiseId != null and raiseId != ''">
+    	       and raiseOrderItem.raise_id = #{raiseId,jdbcType=NUMERIC} 
+			</if>     
+	    </where> 
+       </trim>
+      ORDER BY raiseOrderItem.create_date DESC
+  </select>
+  
+  <select id="selectByRaiseId" parameterType="java.util.Map" resultMap="BaseResultMapVo">
+  		select 
+	    	ro.user_id, ro.user_nick as nick_name, roi.lucky_no, roi.create_date
+	    from T_RAISE_ORDER_ITEMS roi
+	    left join T_RAISE_ORDER ro on roi.order_id=ro.id
+	    where roi.RAISE_ID = #{id,jdbcType=NUMERIC}
+	    <if test="nickName != null and nickName != ''">
+	    	and ro.user_nick like '%'||#{nickName,jdbcType=VARCHAR}||'%'
+	    </if>
+	    <if test="luckyNo != null">
+	    	and roi.lucky_no = #{luckyNo,jdbcType=NUMERIC}
+	    </if>
+	    order by roi.CREATE_DATE desc
+  </select>
+  
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_RAISE_ORDER
+    where RAISE_ID = #{raiseId,jdbcType=NUMERIC}
+    and USER_ID = #{userId,jdbcType=NUMERIC}
+  </select>
+  
+  <update id="updateAlertStatus" parameterType="java.util.Map">
+  	UPDATE T_RAISE_ORDER SET IS_ALERT=#{isAlert,jdbcType=VARCHAR} WHERE RAISE_ID=#{raiseId,jdbcType=NUMERIC} and USER_ID=#{userId,jdbcType=NUMERIC}
+  </update>
+  
+  <select id="getOrderByWxFans" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_RAISE_ORDER
+    where RAISE_ID = #{raiseId,jdbcType=NUMERIC}
+    and USER_ID = #{userId,jdbcType=NUMERIC}
+  </select>
+</mapper>

@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/gxzy/!svn/ver/12546/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/config/quartz/job
+END
+RaiseStatusJob.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/gxzy/!svn/ver/12477/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/config/quartz/job/RaiseStatusJob.java
+END
+LuckDrawJob.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/gxzy/!svn/ver/11875/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/config/quartz/job/LuckDrawJob.java
+END
+LuckSendWxModelMsgJob.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/gxzy/!svn/ver/12546/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/config/quartz/job/LuckSendWxModelMsgJob.java
+END
+GetEmsNoJob.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/gxzy/!svn/ver/12387/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/config/quartz/job/GetEmsNoJob.java
+END

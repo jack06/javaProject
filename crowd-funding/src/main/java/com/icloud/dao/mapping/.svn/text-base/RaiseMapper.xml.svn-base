@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icloud.dao.RaiseMapper" >
+  <resultMap id="BaseResultMap" type="com.icloud.model.Raise" >
+    <id column="ID" property="id" jdbcType="NUMERIC" />
+    <result column="RAISE_NAME" property="raiseName" jdbcType="VARCHAR" />
+    <result column="CURRENT_PERIOD" property="currentPeriod" jdbcType="NUMERIC" />
+    <result column="RAISE_ICON" property="raiseIcon" jdbcType="VARCHAR" />
+    <result column="TOTAL_LEDOU" property="totalLedou" jdbcType="NUMERIC" />
+    <result column="MAX_SARE" property="maxSare" jdbcType="NUMERIC" />
+    <result column="TOTAL_SHARE" property="totalShare" jdbcType="NUMERIC" />
+    <result column="EACH_TOTAL" property="eachTotal" jdbcType="NUMERIC" />
+    <result column="START_DATE" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="END_DATE" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="CURRENT_STATUS" property="currentStatus" jdbcType="VARCHAR" />
+    <result column="PRODUCT_DETAILS" property="productDetails" jdbcType="CLOB" />
+    <result column="PRODUCT_SPECIFICATIONS" property="productSpecifications" jdbcType="VARCHAR" />
+    <result column="PRIZE_AMOUNT" property="prizeAmount" jdbcType="NUMERIC" />
+    <result column="CURRENT_NUM" property="currentNum" jdbcType="NUMERIC" />
+    <result column="OUT_TIME" property="outTime" jdbcType="TIMESTAMP" />
+    <result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" />
+    <result column="PRODUCT_PRICE" property="productPrice" jdbcType="NUMERIC" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+    <result column="DELIVERY_TYPE" property="deliveryType" jdbcType="VARCHAR" /> 
+    <result column="PRIZE_TYPE" property="prizeType" jdbcType="VARCHAR" />  
+  </resultMap>
+  <resultMap id="RaiseListHtMap" type="com.icloud.model.Raise" >
+    <id column="ID" property="id" jdbcType="NUMERIC" />
+    <result column="RAISE_NAME" property="raiseName" jdbcType="VARCHAR" />
+    <result column="CURRENT_PERIOD" property="currentPeriod" jdbcType="NUMERIC" />
+    <result column="START_DATE" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="END_DATE" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="CURRENT_STATUS" property="currentStatus" jdbcType="VARCHAR" />
+    <result column="RAISE_ICON" property="raiseIcon" jdbcType="VARCHAR" />
+    <result column="PRIZE_AMOUNT" property="prizeAmount" jdbcType="NUMERIC" />
+    <result column="CURRENT_NUM" property="currentNum" jdbcType="NUMERIC" />
+    <result column="OUT_TIME" property="outTime" jdbcType="TIMESTAMP" />
+    <result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" />
+    <result column="PRODUCT_PRICE" property="productPrice" jdbcType="NUMERIC" />
+    <result column="DELIVERY_TYPE" property="deliveryType" jdbcType="VARCHAR" />  
+  </resultMap>
+  <!-- 查询众筹,关联中奖记录 -->
+   <resultMap id="RaseJoinPrizeRecordResultMap" type="com.icloud.model.Raise" >
+    <id column="ID" property="id" jdbcType="NUMERIC" />
+    <result column="RAISE_NAME" property="raiseName" jdbcType="VARCHAR" />
+    <result column="CURRENT_PERIOD" property="currentPeriod" jdbcType="NUMERIC" />
+    <result column="RAISE_ICON" property="raiseIcon" jdbcType="VARCHAR" />
+    <result column="CURRENT_NUM" property="currentNum" jdbcType="NUMERIC" />
+    <result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" />
+    <result column="PRODUCT_PRICE" property="productPrice" jdbcType="NUMERIC" />
+    <result column="OUT_TIME" property="outTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+    <result column="LUCKY_NUM" property="luckyNum" jdbcType="NUMERIC" />
+  </resultMap>  
+  <!-- 查询众筹,关联众筹订单 -->
+  <resultMap id="RaiseJoinRaiseOrderResultMap" type="com.icloud.model.Raise" >
+    <id column="ID" property="id" jdbcType="NUMERIC" />
+    <result column="RAISE_NAME" property="raiseName" jdbcType="VARCHAR" />
+    <result column="CURRENT_PERIOD" property="currentPeriod" jdbcType="NUMERIC" />
+    <result column="RAISE_ICON" property="raiseIcon" jdbcType="VARCHAR" />
+    <result column="TOTAL_LEDOU" property="totalLedou" jdbcType="NUMERIC" />
+    <result column="MAX_SARE" property="maxSare" jdbcType="NUMERIC" />
+    <result column="TOTAL_SHARE" property="totalShare" jdbcType="NUMERIC" />
+    <result column="EACH_TOTAL" property="eachTotal" jdbcType="NUMERIC" />
+    <result column="START_DATE" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="END_DATE" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="CURRENT_STATUS" property="currentStatus" jdbcType="VARCHAR" />
+    <result column="PRODUCT_DETAILS" property="productDetails" jdbcType="CLOB" />
+    <result column="PRODUCT_SPECIFICATIONS" property="productSpecifications" jdbcType="VARCHAR" />
+    <result column="PRIZE_AMOUNT" property="prizeAmount" jdbcType="NUMERIC" />
+    <result column="CURRENT_NUM" property="currentNum" jdbcType="NUMERIC" />
+    <result column="OUT_TIME" property="outTime" jdbcType="TIMESTAMP" />
+    <result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" />
+    <result column="PRODUCT_PRICE" property="productPrice" jdbcType="NUMERIC" />
+    <!-- 关联众筹订单表 -->
+    <collection property="raiseOrders"
+    	column="id"
+    	select="com.icloud.dao.RaiseOrderMapper.selectByRaiseId"
+    />
+  </resultMap>
+    <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  
+   <select id="selectByExample" parameterType="com.icloud.common.QueryBuilder" resultMap="RaiseListHtMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from T_ZL_RAISE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  
+    <select id="countByExample" parameterType="com.icloud.common.QueryBuilder" resultType="java.lang.Long">
+    select count(*) from T_ZL_RAISE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+  
+  <sql id="Base_Column_List" >
+    ID, RAISE_NAME, CURRENT_PERIOD, RAISE_ICON, TOTAL_LEDOU, MAX_SARE, TOTAL_SHARE, EACH_TOTAL, 
+    START_DATE, END_DATE, CURRENT_STATUS, PRODUCT_DETAILS, PRODUCT_SPECIFICATIONS, PRIZE_AMOUNT, 
+    CURRENT_NUM, OUT_TIME, PRODUCT_NAME, PRODUCT_PRICE,DELIVERY_TYPE,PRIZE_TYPE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_ZL_RAISE
+    where ID = #{id,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from T_ZL_RAISE
+    where ID = #{id,jdbcType=NUMERIC}
+  </delete>
+  <insert id="insert" parameterType="com.icloud.model.Raise" >
+    insert into T_ZL_RAISE (ID, RAISE_NAME, CURRENT_PERIOD, 
+      RAISE_ICON, TOTAL_LEDOU, MAX_SARE, 
+      TOTAL_SHARE, EACH_TOTAL, START_DATE, 
+      END_DATE, CURRENT_STATUS, PRODUCT_DETAILS, 
+      PRODUCT_SPECIFICATIONS, PRIZE_AMOUNT, CURRENT_NUM, 
+      OUT_TIME, PRODUCT_NAME, PRODUCT_PRICE
+      )
+    values (#{id,jdbcType=NUMERIC}, #{raiseName,jdbcType=VARCHAR}, #{currentPeriod,jdbcType=NUMERIC}, 
+      #{raiseIcon,jdbcType=VARCHAR}, #{totalLedou,jdbcType=NUMERIC}, #{maxSare,jdbcType=NUMERIC}, 
+      #{totalShare,jdbcType=NUMERIC}, #{eachTotal,jdbcType=NUMERIC}, #{startDate,jdbcType=TIMESTAMP}, 
+      #{endDate,jdbcType=TIMESTAMP}, #{currentStatus,jdbcType=VARCHAR}, #{productDetails,jdbcType=VARCHAR}, 
+      #{productSpecifications,jdbcType=VARCHAR}, #{prizeAmount,jdbcType=NUMERIC}, #{currentNum,jdbcType=NUMERIC}, 
+      #{outTime,jdbcType=TIMESTAMP}, #{productName,jdbcType=VARCHAR}, #{productPrice,jdbcType=NUMERIC}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.icloud.model.Raise" >
+    insert into T_ZL_RAISE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="1 != 2" >
+        ID,
+      </if>
+      <if test="raiseName != null" >
+        RAISE_NAME,
+      </if>
+      <if test="currentPeriod != null" >
+        CURRENT_PERIOD,
+      </if>
+      <if test="raiseIcon != null" >
+        RAISE_ICON,
+      </if>
+      <if test="totalLedou != null" >
+        TOTAL_LEDOU,
+      </if>
+      <if test="maxSare != null" >
+        MAX_SARE,
+      </if>
+      <if test="totalShare != null" >
+        TOTAL_SHARE,
+      </if>
+      <if test="eachTotal != null" >
+        EACH_TOTAL,
+      </if>
+      <if test="startDate != null" >
+        START_DATE,
+      </if>
+      <if test="endDate != null" >
+        END_DATE,
+      </if>
+      <if test="currentStatus != null" >
+        CURRENT_STATUS,
+      </if>
+      <if test="productDetails != null" >
+        PRODUCT_DETAILS,
+      </if>
+      <if test="productSpecifications != null" >
+        PRODUCT_SPECIFICATIONS,
+      </if>
+      <if test="prizeAmount != null" >
+        PRIZE_AMOUNT,
+      </if>
+      <if test="currentNum != null" >
+        CURRENT_NUM,
+      </if>
+      <if test="outTime != null" >
+        OUT_TIME,
+      </if>
+      <if test="productName != null" >
+        PRODUCT_NAME,
+      </if>
+      <if test="productPrice != null" >
+        PRODUCT_PRICE,
+      </if>
+      <if test="deliveryType != null" >
+        DELIVERY_TYPE,
+      </if>
+      <if test="prizeType != null" >
+        PRIZE_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="1 != 2" >
+        SEQ_RAISE.nextval,
+      </if>
+      <if test="raiseName != null" >
+        #{raiseName,jdbcType=VARCHAR},
+      </if>
+      <if test="currentPeriod != null" >
+        #{currentPeriod,jdbcType=NUMERIC},
+      </if>
+      <if test="raiseIcon != null" >
+        #{raiseIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="totalLedou != null" >
+        #{totalLedou,jdbcType=NUMERIC},
+      </if>
+      <if test="maxSare != null" >
+        #{maxSare,jdbcType=NUMERIC},
+      </if>
+      <if test="totalShare != null" >
+        #{totalShare,jdbcType=NUMERIC},
+      </if>
+      <if test="eachTotal != null" >
+        #{eachTotal,jdbcType=NUMERIC},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="currentStatus != null" >
+        #{currentStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="productDetails != null" >
+        #{productDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="productSpecifications != null" >
+        #{productSpecifications,jdbcType=VARCHAR},
+      </if>
+      <if test="prizeAmount != null" >
+        #{prizeAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="currentNum != null" >
+        #{currentNum,jdbcType=NUMERIC},
+      </if>
+      <if test="outTime != null" >
+        #{outTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productPrice != null" >
+        #{productPrice,jdbcType=NUMERIC},
+      </if>
+      <if test="deliveryType != null" >
+        #{deliveryType,jdbcType=VARCHAR},
+      </if>
+      <if test="prizeType != null" >
+        #{prizeType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.icloud.model.Raise" >
+    update T_ZL_RAISE
+    <set >
+      <if test="raiseName != null and raiseName != ''">
+        RAISE_NAME = #{raiseName,jdbcType=VARCHAR},
+      </if>
+      <if test="currentPeriod != null and currentPeriod != ''" >
+        CURRENT_PERIOD = #{currentPeriod,jdbcType=NUMERIC},
+      </if>
+      <if test="raiseIcon != null and raiseIcon != ''" >
+        RAISE_ICON = #{raiseIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="totalLedou != null and totalLedou != ''" >
+        TOTAL_LEDOU = #{totalLedou,jdbcType=NUMERIC},
+      </if>
+      <if test="maxSare != null and maxSare != ''" >
+        MAX_SARE = #{maxSare,jdbcType=NUMERIC},
+      </if>
+      <if test="totalShare != null and totalShare != ''" >
+        TOTAL_SHARE = #{totalShare,jdbcType=NUMERIC},
+      </if>
+      <if test="eachTotal != null and eachTotal != ''" >
+        EACH_TOTAL = #{eachTotal,jdbcType=NUMERIC},
+      </if>
+      <if test="startDate != null and startDate != ''" >
+        START_DATE = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null and endDate != ''" >
+        END_DATE = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="currentStatus != null and currentStatus != ''" >
+        CURRENT_STATUS = #{currentStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="productDetails != null and productDetails != ''" >
+        PRODUCT_DETAILS = #{productDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="productSpecifications != null and productSpecifications != ''" >
+        PRODUCT_SPECIFICATIONS = #{productSpecifications,jdbcType=VARCHAR},
+      </if>
+      <if test="prizeAmount != null and raiseName != ''" >
+        PRIZE_AMOUNT = #{prizeAmount,jdbcType=NUMERIC},
+      </if>
+      <if test="currentNum != null and currentNum != ''" >
+        CURRENT_NUM = #{currentNum,jdbcType=NUMERIC},
+      </if>
+      <if test="outTime != null and outTime != ''" >
+        OUT_TIME = #{outTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="productName != null and productName != ''" >
+        PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productPrice != null and productPrice != ''" >
+        PRODUCT_PRICE = #{productPrice,jdbcType=NUMERIC},
+      </if>
+      <if test="deliveryType != null and deliveryType != ''" >
+        DELIVERY_TYPE = #{deliveryType,jdbcType=VARCHAR},
+      </if>
+      <if test="prizeType != null and prizeType != ''" >
+        PRIZE_TYPE = #{prizeType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.icloud.model.Raise" >
+    update T_ZL_RAISE
+    set RAISE_NAME = #{raiseName,jdbcType=VARCHAR},
+      CURRENT_PERIOD = #{currentPeriod,jdbcType=NUMERIC},
+      RAISE_ICON = #{raiseIcon,jdbcType=VARCHAR},
+      TOTAL_LEDOU = #{totalLedou,jdbcType=NUMERIC},
+      MAX_SARE = #{maxSare,jdbcType=NUMERIC},
+      TOTAL_SHARE = #{totalShare,jdbcType=NUMERIC},
+      EACH_TOTAL = #{eachTotal,jdbcType=NUMERIC},
+      START_DATE = #{startDate,jdbcType=TIMESTAMP},
+      END_DATE = #{endDate,jdbcType=TIMESTAMP},
+      CURRENT_STATUS = #{currentStatus,jdbcType=VARCHAR},
+      PRODUCT_DETAILS = #{productDetails,jdbcType=VARCHAR},
+      PRODUCT_SPECIFICATIONS = #{productSpecifications,jdbcType=VARCHAR},
+      PRIZE_AMOUNT = #{prizeAmount,jdbcType=NUMERIC},
+      CURRENT_NUM = #{currentNum,jdbcType=NUMERIC},
+      OUT_TIME = #{outTime,jdbcType=TIMESTAMP},
+      PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      PRODUCT_PRICE = #{productPrice,jdbcType=NUMERIC}
+    where ID = #{id,jdbcType=NUMERIC}
+  </update>
+  <!-- 查询往期众筹,级联开奖记录表 -->
+  <select id="selectRaseJoinPrizeRecord" parameterType="java.util.Map" resultMap="RaseJoinPrizeRecordResultMap">
+    SELECT 
+       distinct ID, 
+       RAISE_NAME, 
+       CURRENT_PERIOD, 
+       RAISE_ICON,  
+       CURRENT_NUM,
+       PRODUCT_NAME, 
+       PRODUCT_PRICE,
+       OUT_TIME,
+       CREATE_TIME,
+       LUCKY_NUM
+    FROM(
+        SELECT 
+           distinct ID, 
+           RAISE_NAME, 
+           CURRENT_PERIOD, 
+           RAISE_ICON,  
+           CURRENT_NUM,
+           PRODUCT_NAME, 
+           PRODUCT_PRICE,
+           OUT_TIME,
+           CREATE_TIME,
+           LUCKY_NUM,
+           ROWNUM  RN
+        FROM(
+             select
+                    zc.ID, 
+                    zc.RAISE_NAME, 
+                    zc.CURRENT_PERIOD, 
+                    zc.RAISE_ICON,  
+                    zc.CURRENT_NUM,
+                    zc.PRODUCT_NAME, 
+                    zc.PRODUCT_PRICE,
+                    zc.OUT_TIME,
+                    zc.CREATE_TIME,
+                    ( select count(*) from T_PRIZE_RECORD  where raise_id = zc.ID) LUCKY_NUM
+              FROM  T_ZL_RAISE zc ,t_raise_order_items item ,zl_wx_fans  fan   
+              WHERE 
+                zc.id=item.raise_id AND
+                fan.id=item.user_id AND
+                fan.open_id =#{openid,jdbcType=VARCHAR}
+                ORDER BY zc.create_time  DESC 
+        ) tab
+        WHERE ROWNUM &lt;= #{endNum,jdbcType=NUMERIC}
+    ) result 
+    WHERE result.RN &gt;= #{begNum,jdbcType=NUMERIC}
+    ORDER BY result.create_time  DESC 
+		
+  </select> 
+  <!-- 查询往期众筹,记录数 --> 
+  <select id="selectRaseJoinPrizeRecordCount" parameterType="java.util.Map" resultType="int">
+		SELECT
+		  count(distinct zc.ID) 
+		FROM  T_ZL_RAISE zc ,t_raise_order_items item ,zl_wx_fans  fan   
+		WHERE 
+		  zc.id=item.raise_id AND
+		  fan.id=item.user_id AND
+		  fan.open_id = #{openid,jdbcType=VARCHAR}
+  </select>    
+  <!-- 查询开奖时间为当天的众筹 -->
+  <select id="selectRaiseForLuckDraw" parameterType="java.util.Map" resultMap="BaseResultMap">
+	    select
+	    <include refid="Base_Column_List" />
+	    from T_ZL_RAISE 
+	    where
+	    CURRENT_STATUS = '2'
+	    and to_char(OUT_TIME,'YYYYMMDD')=to_char(sysdate, 'YYYYMMDD')
+  </select>
+  <!-- 查询已完成的众筹 -->
+  <select id="findCompletedList" parameterType="com.icloud.common.QueryBuilder" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from T_ZL_RAISE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <!-- 查询所有期数 -->
+  <select id="findAllPeriod" resultType="java.lang.Long">
+  		select
+	    	CURRENT_PERIOD
+	    from T_ZL_RAISE 
+	    where 
+	    CURRENT_STATUS = '3'
+	    group by CURRENT_PERIOD
+	    order by CURRENT_PERIOD desc
+  </select>
+  
+  <select id="selectRaiseByOrderId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  select <include refid="Base_Column_List" />
+	from
+	(select r.id, r.raise_name,r.current_period,r.raise_icon,r.total_ledou,r.total_share,r.max_sare,r.each_total,r.start_date,r.end_date,
+       r.current_status,r.product_specifications,r.prize_amount,r.current_num,r.out_time,r.product_name,r.product_price,
+       r.create_time,r.product_details,r.delivery_type,r.prize_type
+  	from t_zl_raise r
+  	left join t_raise_order ro on r.id = ro.raise_id
+ 	where ro.id = #{orderId,jdbcType=NUMERIC})
+  </select>
+</mapper>

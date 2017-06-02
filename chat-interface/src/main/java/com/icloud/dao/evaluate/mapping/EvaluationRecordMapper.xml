@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icloud.dao.evaluate.EvaluationRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.icloud.model.evaluate.EvaluationRecord" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="event_id" property="eventId" jdbcType="VARCHAR" />
+    <result column="module_id" property="moduleId" jdbcType="VARCHAR" />
+    <result column="evaluation_time" property="evaluationTime" jdbcType="TIMESTAMP" />
+    <result column="evaluation_user" property="evaluationUser" jdbcType="VARCHAR" />
+    <result column="evaluation_content" property="evaluationContent" jdbcType="VARCHAR" />
+    <result column="header_img" property="headerImg" jdbcType="VARCHAR" />
+    <result column="nick" property="nick" jdbcType="VARCHAR" />
+    <result column="evaluation_level" property="evaluationLevel" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, event_id, module_id, evaluation_time, evaluation_user, evaluation_content, header_img, 
+    nick, evaluation_level
+  </sql>
+  
+    <sql id="Example_Where_Clause">
+  <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  
+   <select id="selectByExample" parameterType="com.icloud.common.QueryBuilder" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_evaluation_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+    <select id="countByExample" parameterType="com.icloud.common.QueryBuilder" resultType="java.lang.Long">
+    select count(*) from t_evaluation_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_evaluation_record
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from t_evaluation_record
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.icloud.model.evaluate.EvaluationRecord" >
+  <selectKey keyProperty="id" resultType="String" order="BEFORE">
+			select replace(uuid(),'-','') from dual
+		</selectKey>
+
+    insert into t_evaluation_record (id, event_id, module_id, 
+      evaluation_time, evaluation_user, evaluation_content, 
+      header_img, nick, evaluation_level
+      )
+    values (#{id,jdbcType=VARCHAR}, #{eventId,jdbcType=VARCHAR}, #{moduleId,jdbcType=VARCHAR}, 
+      #{evaluationTime,jdbcType=TIMESTAMP}, #{evaluationUser,jdbcType=VARCHAR}, #{evaluationContent,jdbcType=VARCHAR}, 
+      #{headerImg,jdbcType=VARCHAR}, #{nick,jdbcType=VARCHAR}, #{evaluationLevel,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.icloud.model.evaluate.EvaluationRecord" >
+    insert into t_evaluation_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="eventId != null" >
+        event_id,
+      </if>
+      <if test="moduleId != null" >
+        module_id,
+      </if>
+      <if test="evaluationTime != null" >
+        evaluation_time,
+      </if>
+      <if test="evaluationUser != null" >
+        evaluation_user,
+      </if>
+      <if test="evaluationContent != null" >
+        evaluation_content,
+      </if>
+      <if test="headerImg != null" >
+        header_img,
+      </if>
+      <if test="nick != null" >
+        nick,
+      </if>
+      <if test="evaluationLevel != null" >
+        evaluation_level,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="eventId != null" >
+        #{eventId,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleId != null" >
+        #{moduleId,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluationTime != null" >
+        #{evaluationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="evaluationUser != null" >
+        #{evaluationUser,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluationContent != null" >
+        #{evaluationContent,jdbcType=VARCHAR},
+      </if>
+      <if test="headerImg != null" >
+        #{headerImg,jdbcType=VARCHAR},
+      </if>
+      <if test="nick != null" >
+        #{nick,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluationLevel != null" >
+        #{evaluationLevel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.icloud.model.evaluate.EvaluationRecord" >
+    update t_evaluation_record
+    <set >
+      <if test="eventId != null" >
+        event_id = #{eventId,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleId != null" >
+        module_id = #{moduleId,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluationTime != null" >
+        evaluation_time = #{evaluationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="evaluationUser != null" >
+        evaluation_user = #{evaluationUser,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluationContent != null" >
+        evaluation_content = #{evaluationContent,jdbcType=VARCHAR},
+      </if>
+      <if test="headerImg != null" >
+        header_img = #{headerImg,jdbcType=VARCHAR},
+      </if>
+      <if test="nick != null" >
+        nick = #{nick,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluationLevel != null" >
+        evaluation_level = #{evaluationLevel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.icloud.model.evaluate.EvaluationRecord" >
+    update t_evaluation_record
+    set event_id = #{eventId,jdbcType=VARCHAR},
+      module_id = #{moduleId,jdbcType=VARCHAR},
+      evaluation_time = #{evaluationTime,jdbcType=TIMESTAMP},
+      evaluation_user = #{evaluationUser,jdbcType=VARCHAR},
+      evaluation_content = #{evaluationContent,jdbcType=VARCHAR},
+      header_img = #{headerImg,jdbcType=VARCHAR},
+      nick = #{nick,jdbcType=VARCHAR},
+      evaluation_level = #{evaluationLevel,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

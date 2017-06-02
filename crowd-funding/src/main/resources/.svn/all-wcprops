@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/gxzy/!svn/ver/13154/zl/zl_crowd_funding/crowd-funding/src/main/resources
+END
+config.properties
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/gxzy/!svn/ver/12553/zl/zl_crowd_funding/crowd-funding/src/main/resources/config.properties
+END
+log4j2.xml
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/gxzy/!svn/ver/10854/zl/zl_crowd_funding/crowd-funding/src/main/resources/log4j2.xml
+END
+data-ehcache.xml
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/gxzy/!svn/ver/13154/zl/zl_crowd_funding/crowd-funding/src/main/resources/data-ehcache.xml
+END
+mybatis-config.xml
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/gxzy/!svn/ver/11948/zl/zl_crowd_funding/crowd-funding/src/main/resources/mybatis-config.xml
+END
+jdbc.properties
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/gxzy/!svn/ver/13154/zl/zl_crowd_funding/crowd-funding/src/main/resources/jdbc.properties
+END
+application.properties
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/gxzy/!svn/ver/11185/zl/zl_crowd_funding/crowd-funding/src/main/resources/application.properties
+END

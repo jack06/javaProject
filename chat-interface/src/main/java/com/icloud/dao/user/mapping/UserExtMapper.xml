@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icloud.dao.user.UserExtMapper">
+	<resultMap id="BaseResultMap" type="com.icloud.model.user.UserExt">
+		<result column="id" jdbcType="VARCHAR" property="id" />
+		<result column="photo" jdbcType="VARCHAR" property="photo" />
+		<result column="real_name" jdbcType="VARCHAR" property="realName" />
+		<result column="word_no" jdbcType="VARCHAR" property="wordNo" />
+		<result column="departments" jdbcType="VARCHAR" property="departments" />
+		<result column="native_place" jdbcType="VARCHAR" property="nativePlace" />
+		<result column="gender" jdbcType="VARCHAR" property="gender" />
+		<result column="professional" jdbcType="VARCHAR" property="professional" />
+		<result column="grade" jdbcType="VARCHAR" property="grade" />
+		<result column="phone" jdbcType="VARCHAR" property="phone" />
+		<result column="email" jdbcType="VARCHAR" property="email" />
+		<result column="role_id" jdbcType="VARCHAR" property="roleId" />
+		<result column="user_id" jdbcType="VARCHAR" property="userId" />
+		<result column="is_certification" jdbcType="VARCHAR" property="isCertification"/>
+	    <collection property="userRole" column="role_id" select="com.icloud.dao.user.UserRoleMapper.findByKey" />
+	</resultMap>
+
+	<delete id="deleteByKey" parameterType="String">
+		delete from t_user_ext
+		where id=${id}
+	</delete>
+
+	<insert id="save" parameterType="com.icloud.model.user.UserExt">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			select replace(uuid(),'-','') from dual
+		</selectKey>
+		insert into t_user_ext (
+		id,photo,real_name,word_no,departments,native_place,gender,professional,grade,phone,email,role_id,user_id,is_certification
+		) values
+		(#{id,jdbcType=VARCHAR}, #{photo,jdbcType=VARCHAR},
+		#{realName,jdbcType=VARCHAR}, #{wordNo,jdbcType=VARCHAR},
+		#{departments},#{nativePlace},#{gender},#{professional},#{grade},#{phone},#{email},#{roleId},#{userId},#{isCertification})
+	</insert>
+
+	<update id="update" parameterType="com.icloud.model.user.UserExt">
+		update t_user_ext
+		<set>
+		    <if test="userId != null">
+				user_id = #{userId,jdbcType=VARCHAR},
+			</if>
+			<if test="realName != null">
+				real_name = #{realName,jdbcType=VARCHAR},
+			</if>
+			<if test="isCertification != null">
+				is_certification = #{isCertification,jdbcType=VARCHAR},
+			</if>
+			<if test="photo != null">
+				photo = #{photo,jdbcType=VARCHAR},
+			</if>
+			<if test="wordNo != null">
+				word_no = #{wordNo,jdbcType=VARCHAR},
+			</if>
+			<if test="departments != null">
+				departments = #{departments,jdbcType=VARCHAR},
+			</if>
+			<if test="nativePlace != null">
+				native_place = #{nativePlace,jdbcType=VARCHAR},
+			</if>
+			<if test="gender != null">
+			   gender = #{gender,jdbcType=VARCHAR},
+			</if>
+			<if test="professional != null">
+			   professional = #{professional,jdbcType=VARCHAR},
+			</if>
+			<if test="grade != null">
+			   grade = #{grade,jdbcType=VARCHAR},
+			</if>
+			<if test="phone !=null">
+			  phone = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="email !=null">
+			  email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="hobby !=null">
+			  hobby = #{hobby,jdbcType=VARCHAR},
+			</if>
+			<if test="declaration !=null">
+			  declaration = #{declaration,jdbcType=VARCHAR},
+			</if>
+			<if test="userId !=null">
+			  user_id = #{userId}
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<select id="findForObject" parameterType="String" resultMap="BaseResultMap">
+		select t.* from t_user_ext t where t.id=${id}
+	</select>
+	<select id="findByUser" parameterType="String" resultMap="BaseResultMap">
+		select t.* from t_user_ext t where t.user_id=#{userId}
+	</select>
+	<select id="findByphone" parameterType="String" resultMap="BaseResultMap">
+		select t.* from t_user_ext t where t.phone=#{phone}
+	</select>
+	<select id="findByEmail" parameterType="String" resultMap="BaseResultMap">
+		select t.* from t_user_ext t where t.email=#{email}
+	</select>
+	
+</mapper>

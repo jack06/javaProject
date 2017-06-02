@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/gxzy/!svn/ver/13170/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/service/impl
+END
+AwardRecordServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/gxzy/!svn/ver/12334/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/service/impl/AwardRecordServiceImpl.java
+END
+RaiseOrderServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/gxzy/!svn/ver/13161/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/service/impl/RaiseOrderServiceImpl.java
+END
+BaseServiceImple.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/gxzy/!svn/ver/10855/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/service/impl/BaseServiceImple.java
+END
+RaiseOrderItemsServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/gxzy/!svn/ver/11830/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/service/impl/RaiseOrderItemsServiceImpl.java
+END
+RaiseServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/gxzy/!svn/ver/13272/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/service/impl/RaiseServiceImpl.java
+END
+LuckyNoServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/gxzy/!svn/ver/11541/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/service/impl/LuckyNoServiceImpl.java
+END
+RaiseMsqServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/gxzy/!svn/ver/11444/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/service/impl/RaiseMsqServiceImpl.java
+END
+WxFansServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/gxzy/!svn/ver/13161/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/service/impl/WxFansServiceImpl.java
+END
+PrizeRecordServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/gxzy/!svn/ver/12547/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/service/impl/PrizeRecordServiceImpl.java
+END
+LoginServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/gxzy/!svn/ver/10854/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/service/impl/LoginServiceImpl.java
+END
+TestOrderServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/gxzy/!svn/ver/11193/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/service/impl/TestOrderServiceImpl.java
+END

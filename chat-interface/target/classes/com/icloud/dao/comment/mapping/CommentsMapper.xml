@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icloud.dao.comment.CommentsMapper">
+	<resultMap id="BaseResultMap" type="com.icloud.model.comments.Comments">
+		<result column="id" jdbcType="VARCHAR" property="id" />
+		<result column="event_id" jdbcType="VARCHAR" property="eventId" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="user_id" jdbcType="TIMESTAMP" property="userId" />
+		<result column="nick" jdbcType="VARCHAR" property="nick" />
+		<result column="header_img" jdbcType="VARCHAR" property="headrImg" />
+		<result column="comment_config_id" jdbcType="VARCHAR" property="commentConfigId" />
+		<collection property="recordList" select="com.icloud.dao.comment.CommentRecordMapper.selectByCommentId" column="id" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, event_id, create_time,
+		user_id,nick,header_img,comment_config_id
+	</sql>
+
+	<delete id="deleteByKey" parameterType="String">
+		delete from
+		t_comments
+		where id=${id}
+	</delete>
+
+	<insert id="save" parameterType="com.icloud.model.comments.Comments">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+			select replace(uuid(),'-','') from dual
+		</selectKey>
+		insert into t_comments (id, event_id, create_time,
+		user_id,nick,header_img,comment_config_id) values
+		(#{id,jdbcType=VARCHAR},
+		#{eventId,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{userId,jdbcType=VARCHAR},#{nick,jdbcType=VARCHAR},#{headrImg,jdbcType=VARCHAR}
+		,#{commentConfigId,jdbcType=VARCHAR})
+	</insert>
+
+	<select id="findForList" parameterType="com.icloud.model.comments.Comments"
+		resultMap="BaseResultMap">
+		select t.* from t_comments t
+		<where>
+			<if test="eventId != null">
+				and t.event_id = #{eventId,jdbcType=VARCHAR}
+			</if>
+			<if test="commentConfigId != null">
+			    and t.comment_config_id=#{commentConfigId}
+			</if>
+		</where>
+      order by t.create_time desc
+	</select>
+</mapper>

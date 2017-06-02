@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icloud.dao.RaiseMsqMapper" >
+  <resultMap id="BaseResultMap" type="com.icloud.model.RaiseMsq" >
+    <id column="ID" property="id" jdbcType="NUMERIC" />
+    <result column="USER_ID" property="userId" jdbcType="NUMERIC" />
+    <result column="ORDER_ID" property="orderId" jdbcType="NUMERIC" />
+    <result column="RAISE_ID" property="raiseId" jdbcType="NUMERIC" />
+    <result column="MSG_CONTENT" property="msgContent" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="READ_STATUS" property="readStatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id='TABLE_SEQUENCE'>SEQ_T_RAISE_MSG.nextval</sql>
+  <sql id="Base_Column_List" >
+    ID, USER_ID, ORDER_ID, RAISE_ID, MSG_CONTENT, CREATE_DATE, READ_STATUS
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_RAISE_MSG
+    where ID = #{id,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from T_RAISE_MSG
+    where ID = #{id,jdbcType=NUMERIC}
+  </delete>
+  <insert id="insert" parameterType="com.icloud.model.RaiseMsq" >
+    insert into T_RAISE_MSG (ID, USER_ID, ORDER_ID, 
+      RAISE_ID, MSG_CONTENT, CREATE_DATE, 
+      READ_STATUS)
+    values (<include refid="TABLE_SEQUENCE" />, #{userId,jdbcType=NUMERIC}, #{orderId,jdbcType=NUMERIC}, 
+      #{raiseId,jdbcType=NUMERIC}, #{msgContent,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{readStatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.icloud.model.RaiseMsq" >
+    insert into T_RAISE_MSG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+      <if test="raiseId != null" >
+        RAISE_ID,
+      </if>
+      <if test="msgContent != null" >
+        MSG_CONTENT,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="readStatus != null" >
+        READ_STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=NUMERIC},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=NUMERIC},
+      </if>
+      <if test="raiseId != null" >
+        #{raiseId,jdbcType=NUMERIC},
+      </if>
+      <if test="msgContent != null" >
+        #{msgContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="readStatus != null" >
+        #{readStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.icloud.model.RaiseMsq" >
+    update T_RAISE_MSG
+    <set >
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="orderId != null" >
+        ORDER_ID = #{orderId,jdbcType=NUMERIC},
+      </if>
+      <if test="raiseId != null" >
+        RAISE_ID = #{raiseId,jdbcType=NUMERIC},
+      </if>
+      <if test="msgContent != null" >
+        MSG_CONTENT = #{msgContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="readStatus != null" >
+        READ_STATUS = #{readStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.icloud.model.RaiseMsq" >
+    update T_RAISE_MSG
+    set USER_ID = #{userId,jdbcType=NUMERIC},
+      ORDER_ID = #{orderId,jdbcType=NUMERIC},
+      RAISE_ID = #{raiseId,jdbcType=NUMERIC},
+      MSG_CONTENT = #{msgContent,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      READ_STATUS = #{readStatus,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=NUMERIC}
+  </update>
+</mapper>

@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/gxzy/!svn/ver/13170/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/service
+END
+RaiseOrderService.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/gxzy/!svn/ver/12346/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/service/RaiseOrderService.java
+END
+RaiseOrderItemsService.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/gxzy/!svn/ver/11830/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/service/RaiseOrderItemsService.java
+END
+RaiseService.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/gxzy/!svn/ver/12958/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/service/RaiseService.java
+END
+LuckyNoService.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/gxzy/!svn/ver/11541/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/service/LuckyNoService.java
+END
+RaiseMsqService.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/gxzy/!svn/ver/11443/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/service/RaiseMsqService.java
+END
+WxFansService.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/gxzy/!svn/ver/13162/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/service/WxFansService.java
+END
+PrizeRecordService.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/gxzy/!svn/ver/12366/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/service/PrizeRecordService.java
+END
+LoginService.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/gxzy/!svn/ver/10854/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/service/LoginService.java
+END
+TestOrderService.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/gxzy/!svn/ver/10901/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/service/TestOrderService.java
+END
+AwardRecordService.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/gxzy/!svn/ver/12334/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/service/AwardRecordService.java
+END

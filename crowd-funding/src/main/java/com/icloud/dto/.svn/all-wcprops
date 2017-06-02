@@ -1,0 +1,143 @@
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/gxzy/!svn/ver/12921/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dto
+END
+AwardRecordListDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/gxzy/!svn/ver/12251/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dto/AwardRecordListDto.java
+END
+RaiseQueryDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/gxzy/!svn/ver/11492/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dto/RaiseQueryDto.java
+END
+RaiseOrderListDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/gxzy/!svn/ver/12039/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dto/RaiseOrderListDto.java
+END
+WxFansQueryDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/gxzy/!svn/ver/11382/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dto/WxFansQueryDto.java
+END
+RaiseListDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/gxzy/!svn/ver/11829/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dto/RaiseListDto.java
+END
+RaiseEntityDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/gxzy/!svn/ver/11474/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dto/RaiseEntityDto.java
+END
+RaiseOrderItemsDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/gxzy/!svn/ver/12316/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dto/RaiseOrderItemsDto.java
+END
+ExportExcleDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/gxzy/!svn/ver/11271/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dto/ExportExcleDto.java
+END
+AwardRecordVoDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/gxzy/!svn/ver/12335/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dto/AwardRecordVoDto.java
+END
+UserPrizeInfoDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/gxzy/!svn/ver/12153/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dto/UserPrizeInfoDto.java
+END
+WxFansRaiseInfoDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/gxzy/!svn/ver/12346/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dto/WxFansRaiseInfoDto.java
+END
+BaseDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/gxzy/!svn/ver/11346/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dto/BaseDto.java
+END
+LuckyOnesDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/gxzy/!svn/ver/11331/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dto/LuckyOnesDto.java
+END
+RecordDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/gxzy/!svn/ver/11505/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dto/RecordDto.java
+END
+LuckyNoListDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/gxzy/!svn/ver/11541/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dto/LuckyNoListDto.java
+END
+AwardRecordExportExcleDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/gxzy/!svn/ver/12151/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dto/AwardRecordExportExcleDto.java
+END
+AddressEditSucessDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/gxzy/!svn/ver/11999/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dto/AddressEditSucessDto.java
+END
+RaiseOrderDetailDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/gxzy/!svn/ver/12153/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dto/RaiseOrderDetailDto.java
+END
+AwardRecordQueryDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/gxzy/!svn/ver/11533/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dto/AwardRecordQueryDto.java
+END
+BaseAddDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/gxzy/!svn/ver/10855/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dto/BaseAddDto.java
+END
+PrizeRecordListDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/gxzy/!svn/ver/11829/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dto/PrizeRecordListDto.java
+END
+PrizeRecordEntityDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/gxzy/!svn/ver/12921/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dto/PrizeRecordEntityDto.java
+END
+RaiseDetailDto.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/gxzy/!svn/ver/12344/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dto/RaiseDetailDto.java
+END

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icloud.dao.LuckyNoMapper" >
+  <resultMap id="BaseResultMap" type="com.icloud.model.LuckyNo" >
+    <id column="ID" property="id" jdbcType="NUMERIC" />
+    <result column="RAISE_ID" property="raiseId" jdbcType="NUMERIC" />
+    <result column="CURRENT_NO" property="currentNo" jdbcType="NUMERIC" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, RAISE_ID, CURRENT_NO
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_LUCKY_NO
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from T_LUCKY_NO
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.icloud.model.LuckyNo" >
+  	<selectKey order="BEFORE" keyProperty="id" resultType="java.lang.Long">
+	    	SELECT seq_lucky_no.NEXTVAL FROM DUAL
+	</selectKey>
+    insert into T_LUCKY_NO (ID, RAISE_ID, CURRENT_NO
+      )
+    values (#{id}, #{raiseId,jdbcType=NUMERIC}, #{currentNo,jdbcType=NUMERIC}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.icloud.model.LuckyNo" >
+    insert into T_LUCKY_NO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="raiseId != null" >
+        RAISE_ID,
+      </if>
+      <if test="currentNo != null" >
+        CURRENT_NO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="raiseId != null" >
+        #{raiseId,jdbcType=DECIMAL},
+      </if>
+      <if test="currentNo != null" >
+        #{currentNo,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.icloud.model.LuckyNo" >
+    update T_LUCKY_NO
+    <set >
+      <if test="raiseId != null" >
+        RAISE_ID = #{raiseId,jdbcType=DECIMAL},
+      </if>
+      <if test="currentNo != null" >
+        CURRENT_NO = #{currentNo,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.icloud.model.LuckyNo" >
+    update T_LUCKY_NO
+    set RAISE_ID = #{raiseId,jdbcType=NUMERIC},
+      CURRENT_NO = #{currentNo,jdbcType=NUMERIC}
+    where ID = #{id,jdbcType=NUMERIC}
+  </update>
+   
+   <select id="selectMaxLuckyNo" resultType="java.lang.Long" parameterType="java.lang.Long" >
+ 	 select max(current_no) from T_LUCKY_NO where raise_id = #{raiseId,jdbcType=NUMERIC}
+  </select>
+  <select id="selectByRaiseId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_LUCKY_NO
+    where RAISE_ID = #{id,jdbcType=DECIMAL}
+  </select>
+</mapper>

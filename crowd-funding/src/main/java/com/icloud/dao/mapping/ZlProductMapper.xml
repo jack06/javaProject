@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icloud.dao.ZlProductMapper" >
+  <resultMap id="BaseResultMap" type="com.icloud.model.zlProductShow.ZlProduct" >
+    <id column="ID" property="id" jdbcType="NUMERIC" />
+    <result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" />
+    <result column="CIGARETTE_TYPE" property="cigaretteType" jdbcType="VARCHAR" />
+    <result column="INTO_OPERATION_TIME" property="intoOperationTime" jdbcType="DATE" />
+    <result column="PRODUCTION_PLACE" property="productionPlace" jdbcType="VARCHAR" />
+    <result column="PACK_TYPE" property="packType" jdbcType="VARCHAR" />
+    <result column="CIGARETTE_SPECIFICATION" property="cigaretteSpecification" jdbcType="VARCHAR" />
+    <result column="TAR_CONTENT" property="tarContent" jdbcType="NUMERIC" />
+    <result column="NICOTINE_CONTENT" property="nicotineContent" jdbcType="NUMERIC" />
+    <result column="CARBON_MONOXIDE_CONTENT" property="carbonMonoxideContent" jdbcType="NUMERIC" />
+    <result column="PIECE_BARCODE" property="pieceBarcode" jdbcType="VARCHAR" />
+    <result column="CARTON_BARCODE" property="cartonBarcode" jdbcType="VARCHAR" />
+    <result column="BOX_BARCODE" property="boxBarcode" jdbcType="VARCHAR" />
+    <result column="PRICE_TYPE" property="priceType" jdbcType="VARCHAR" />
+    <result column="PRICE" property="price" jdbcType="NUMERIC" />
+    <result column="PRODUCT_TYPE" property="productType" jdbcType="VARCHAR" />
+    <result column="PRODUCT_LOGO" property="productLogo" jdbcType="VARCHAR" />
+    <result column="PRODUCT_DETAIL_LOGO" property="productDetailLogo" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="LAST_MODIFY_TIME" property="lastModifyTime" jdbcType="TIMESTAMP" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, PRODUCT_NAME, CIGARETTE_TYPE, INTO_OPERATION_TIME, PRODUCTION_PLACE, PACK_TYPE, 
+    CIGARETTE_SPECIFICATION, TAR_CONTENT, NICOTINE_CONTENT, CARBON_MONOXIDE_CONTENT, 
+    PIECE_BARCODE, CARTON_BARCODE, BOX_BARCODE, PRICE_TYPE, PRICE, PRODUCT_TYPE, PRODUCT_LOGO, 
+    PRODUCT_DETAIL_LOGO, CREATE_TIME, LAST_MODIFY_TIME,TYPE
+  </sql>
+  <sql id='TABLE_SEQUENCE'>SEQ_T_ZL_PRODUCT.nextval</sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_ZL_PRODUCT
+    where ID = #{id,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from T_ZL_PRODUCT
+    where ID = #{id,jdbcType=NUMERIC}
+  </delete>
+  <insert id="insert" parameterType="com.icloud.model.zlProductShow.ZlProduct" >
+    insert into T_ZL_PRODUCT (ID, PRODUCT_NAME, CIGARETTE_TYPE, 
+      INTO_OPERATION_TIME, PRODUCTION_PLACE, PACK_TYPE, 
+      CIGARETTE_SPECIFICATION, TAR_CONTENT, NICOTINE_CONTENT, 
+      CARBON_MONOXIDE_CONTENT, PIECE_BARCODE, CARTON_BARCODE, 
+      BOX_BARCODE, PRICE_TYPE, PRICE, 
+      PRODUCT_TYPE, PRODUCT_LOGO, PRODUCT_DETAIL_LOGO, 
+      CREATE_TIME, LAST_MODIFY_TIME,TYPE)
+    values (<include refid="TABLE_SEQUENCE" />, #{productName,jdbcType=VARCHAR}, #{cigaretteType,jdbcType=VARCHAR}, 
+      #{intoOperationTime,jdbcType=DATE}, #{productionPlace,jdbcType=VARCHAR}, #{packType,jdbcType=VARCHAR}, 
+      #{cigaretteSpecification,jdbcType=VARCHAR}, #{tarContent,jdbcType=NUMERIC}, #{nicotineContent,jdbcType=NUMERIC}, 
+      #{carbonMonoxideContent,jdbcType=NUMERIC}, #{pieceBarcode,jdbcType=VARCHAR}, #{cartonBarcode,jdbcType=VARCHAR}, 
+      #{boxBarcode,jdbcType=VARCHAR}, #{priceType,jdbcType=VARCHAR}, #{price,jdbcType=NUMERIC}, 
+      #{productType,jdbcType=VARCHAR}, #{productLogo,jdbcType=VARCHAR}, #{productDetailLogo,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{lastModifyTime,jdbcType=TIMESTAMP}, #{type,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.icloud.model.zlProductShow.ZlProduct" >
+    insert into T_ZL_PRODUCT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+        ID,
+      <if test="productName != null" >
+        PRODUCT_NAME,
+      </if>
+      <if test="cigaretteType != null" >
+        CIGARETTE_TYPE,
+      </if>
+      <if test="intoOperationTime != null" >
+        INTO_OPERATION_TIME,
+      </if>
+      <if test="productionPlace != null" >
+        PRODUCTION_PLACE,
+      </if>
+      <if test="packType != null" >
+        PACK_TYPE,
+      </if>
+      <if test="cigaretteSpecification != null" >
+        CIGARETTE_SPECIFICATION,
+      </if>
+      <if test="tarContent != null" >
+        TAR_CONTENT,
+      </if>
+      <if test="nicotineContent != null" >
+        NICOTINE_CONTENT,
+      </if>
+      <if test="carbonMonoxideContent != null" >
+        CARBON_MONOXIDE_CONTENT,
+      </if>
+      <if test="pieceBarcode != null" >
+        PIECE_BARCODE,
+      </if>
+      <if test="cartonBarcode != null" >
+        CARTON_BARCODE,
+      </if>
+      <if test="boxBarcode != null" >
+        BOX_BARCODE,
+      </if>
+      <if test="priceType != null" >
+        PRICE_TYPE,
+      </if>
+      <if test="price != null" >
+        PRICE,
+      </if>
+      <if test="productType != null" >
+        PRODUCT_TYPE,
+      </if>
+      <if test="productLogo != null" >
+        PRODUCT_LOGO,
+      </if>
+      <if test="productDetailLogo != null" >
+        PRODUCT_DETAIL_LOGO,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="lastModifyTime != null" >
+        LAST_MODIFY_TIME,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+        <include refid="TABLE_SEQUENCE" />,
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="cigaretteType != null" >
+        #{cigaretteType,jdbcType=VARCHAR},
+      </if>
+      <if test="intoOperationTime != null" >
+        #{intoOperationTime,jdbcType=DATE},
+      </if>
+      <if test="productionPlace != null" >
+        #{productionPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="packType != null" >
+        #{packType,jdbcType=VARCHAR},
+      </if>
+      <if test="cigaretteSpecification != null" >
+        #{cigaretteSpecification,jdbcType=VARCHAR},
+      </if>
+      <if test="tarContent != null" >
+        #{tarContent,jdbcType=NUMERIC},
+      </if>
+      <if test="nicotineContent != null" >
+        #{nicotineContent,jdbcType=NUMERIC},
+      </if>
+      <if test="carbonMonoxideContent != null" >
+        #{carbonMonoxideContent,jdbcType=NUMERIC},
+      </if>
+      <if test="pieceBarcode != null" >
+        #{pieceBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonBarcode != null" >
+        #{cartonBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="boxBarcode != null" >
+        #{boxBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="priceType != null" >
+        #{priceType,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=NUMERIC},
+      </if>
+      <if test="productType != null" >
+        #{productType,jdbcType=VARCHAR},
+      </if>
+      <if test="productLogo != null" >
+        #{productLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="productDetailLogo != null" >
+        #{productDetailLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyTime != null" >
+        #{lastModifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.icloud.model.zlProductShow.ZlProduct" >
+    update T_ZL_PRODUCT
+    <set >
+      <if test="productName != null" >
+        PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="cigaretteType != null" >
+        CIGARETTE_TYPE = #{cigaretteType,jdbcType=VARCHAR},
+      </if>
+      <if test="intoOperationTime != null" >
+        INTO_OPERATION_TIME = #{intoOperationTime,jdbcType=DATE},
+      </if>
+      <if test="productionPlace != null" >
+        PRODUCTION_PLACE = #{productionPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="packType != null" >
+        PACK_TYPE = #{packType,jdbcType=VARCHAR},
+      </if>
+      <if test="cigaretteSpecification != null" >
+        CIGARETTE_SPECIFICATION = #{cigaretteSpecification,jdbcType=VARCHAR},
+      </if>
+      <if test="tarContent != null" >
+        TAR_CONTENT = #{tarContent,jdbcType=NUMERIC},
+      </if>
+      <if test="nicotineContent != null" >
+        NICOTINE_CONTENT = #{nicotineContent,jdbcType=NUMERIC},
+      </if>
+      <if test="carbonMonoxideContent != null" >
+        CARBON_MONOXIDE_CONTENT = #{carbonMonoxideContent,jdbcType=NUMERIC},
+      </if>
+      <if test="pieceBarcode != null" >
+        PIECE_BARCODE = #{pieceBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="cartonBarcode != null" >
+        CARTON_BARCODE = #{cartonBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="boxBarcode != null" >
+        BOX_BARCODE = #{boxBarcode,jdbcType=VARCHAR},
+      </if>
+      <if test="priceType != null" >
+        PRICE_TYPE = #{priceType,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        PRICE = #{price,jdbcType=NUMERIC},
+      </if>
+      <if test="productType != null" >
+        PRODUCT_TYPE = #{productType,jdbcType=VARCHAR},
+      </if>
+      <if test="productLogo != null" >
+        PRODUCT_LOGO = #{productLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="productDetailLogo != null" >
+        PRODUCT_DETAIL_LOGO = #{productDetailLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyTime != null" >
+        LAST_MODIFY_TIME = #{lastModifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.icloud.model.zlProductShow.ZlProduct" >
+    update T_ZL_PRODUCT
+    set PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      CIGARETTE_TYPE = #{cigaretteType,jdbcType=VARCHAR},
+      INTO_OPERATION_TIME = #{intoOperationTime,jdbcType=DATE},
+      PRODUCTION_PLACE = #{productionPlace,jdbcType=VARCHAR},
+      PACK_TYPE = #{packType,jdbcType=VARCHAR},
+      CIGARETTE_SPECIFICATION = #{cigaretteSpecification,jdbcType=VARCHAR},
+      TAR_CONTENT = #{tarContent,jdbcType=NUMERIC},
+      NICOTINE_CONTENT = #{nicotineContent,jdbcType=NUMERIC},
+      CARBON_MONOXIDE_CONTENT = #{carbonMonoxideContent,jdbcType=NUMERIC},
+      PIECE_BARCODE = #{pieceBarcode,jdbcType=VARCHAR},
+      CARTON_BARCODE = #{cartonBarcode,jdbcType=VARCHAR},
+      BOX_BARCODE = #{boxBarcode,jdbcType=VARCHAR},
+      PRICE_TYPE = #{priceType,jdbcType=VARCHAR},
+      PRICE = #{price,jdbcType=NUMERIC},
+      PRODUCT_TYPE = #{productType,jdbcType=VARCHAR},
+      PRODUCT_LOGO = #{productLogo,jdbcType=VARCHAR},
+      PRODUCT_DETAIL_LOGO = #{productDetailLogo,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      LAST_MODIFY_TIME = #{lastModifyTime,jdbcType=TIMESTAMP},
+      TYPE = #{type,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=NUMERIC}
+  </update>
+  
+  <select id="listByPage" resultMap="BaseResultMap" parameterType="com.icloud.common.QueryBuilder" >
+    select 
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from T_ZL_PRODUCT
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    order by CREATE_TIME desc
+  </select>
+  
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  <select id="listByPage4Wx" resultMap="BaseResultMap" parameterType="com.icloud.form.zlProductShow.ZlProductListForm" >
+    select 
+    <include refid="Base_Column_List" />
+    from 
+    (
+     select ID,PRODUCT_NAME,CIGARETTE_TYPE,INTO_OPERATION_TIME,PRODUCTION_PLACE,PACK_TYPE,
+     CIGARETTE_SPECIFICATION,TAR_CONTENT,NICOTINE_CONTENT,CARBON_MONOXIDE_CONTENT,PIECE_BARCODE,
+     CARTON_BARCODE,BOX_BARCODE,PRICE_TYPE,PRICE,PRODUCT_TYPE,PRODUCT_LOGO,PRODUCT_DETAIL_LOGO,
+     CREATE_TIME,LAST_MODIFY_TIME,TYPE, ROWNUM r 
+     from 
+     (select * 
+     	from t_zl_product t
+     	where 1=1
+	    <if test="cigaretteType != '' and cigaretteType != null and cigaretteType != '5'.toString()">
+	      	and t.TYPE like concat(concat('%',#{cigaretteType}),'%')
+	    </if>
+	    <if test="tarContent == '0'.toString()">
+	    	order by t.TAR_CONTENT desc
+	    </if>
+	    <if test="tarContent == '1'.toString()">
+	    	order by t.TAR_CONTENT
+	    </if>
+	    <if test="priceOrderType == '0'.toString()">
+	    	order by PRICE desc
+	    </if>
+	    <if test="priceOrderType == '1'.toString()">
+	    	order by PRICE
+	    </if>
+	    
+	    <if test="priceOrderType == '' or priceOrderType == null">
+	     	<if test="tarContent == '' or tarContent == null">
+	    	order by PRICE
+	    	</if>
+	    </if>
+	    <!-- <if test="tarContent == '0'.toString() and priceOrderType == '0'.toString()">
+	    	order by PRICE desc, t.TAR_CONTENT desc
+	    </if>
+	    <if test="tarContent == '0'.toString() and priceOrderType == '1'.toString()">
+	    	order by PRICE, t.TAR_CONTENT desc
+	    </if>
+	    <if test="tarContent == '1'.toString() and priceOrderType == '0'.toString()">
+	    	order by t.TAR_CONTENT, PRICE desc
+	    </if>
+	    <if test="tarContent == '1'.toString() and priceOrderType == '1'.toString()">
+	    	order by t.PRICE, t.TAR_CONTENT
+	    </if> -->
+     )
+    )
+    where r &gt; #{offset} and r &lt;= #{endRownum}
+  </select>
+  
+  <select id="countListByPage4Wx" resultType="int" parameterType="com.icloud.form.zlProductShow.ZlProductListForm" 
+  flushCache="true" useCache="false">
+    select count(*)
+    from T_ZL_PRODUCT t
+	where 1=1
+		<if test="cigaretteType != '' and cigaretteType != null and cigaretteType != '5'.toString()">
+	      	and t.TYPE like concat(concat('%',#{cigaretteType}),'%')
+	    </if>
+  </select>
+  
+</mapper>

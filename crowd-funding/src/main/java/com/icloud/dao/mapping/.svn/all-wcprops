@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/gxzy/!svn/ver/13159/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dao/mapping
+END
+AwardRecordMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/gxzy/!svn/ver/12336/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dao/mapping/AwardRecordMapper.xml
+END
+RaiseOrderMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/gxzy/!svn/ver/12920/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dao/mapping/RaiseOrderMapper.xml
+END
+RaiseOrderItemsMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/gxzy/!svn/ver/12153/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dao/mapping/RaiseOrderItemsMapper.xml
+END
+RaiseMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/gxzy/!svn/ver/12960/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dao/mapping/RaiseMapper.xml
+END
+RaiseMsqMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/gxzy/!svn/ver/11786/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dao/mapping/RaiseMsqMapper.xml
+END
+LuckyNoMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/gxzy/!svn/ver/11541/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dao/mapping/LuckyNoMapper.xml
+END
+WxFansMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/gxzy/!svn/ver/13159/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dao/mapping/WxFansMapper.xml
+END
+ZlProductMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/gxzy/!svn/ver/12978/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dao/mapping/ZlProductMapper.xml
+END
+PrizeRecordMapper.xml
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/gxzy/!svn/ver/12920/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/dao/mapping/PrizeRecordMapper.xml
+END

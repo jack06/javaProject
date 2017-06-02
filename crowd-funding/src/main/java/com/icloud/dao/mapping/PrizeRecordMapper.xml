@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.icloud.dao.PrizeRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.icloud.model.PrizeRecord" >
+    <id column="ID" property="id" jdbcType="NUMERIC" />
+    <result column="RAISE_ID" property="raiseId" jdbcType="NUMERIC" />
+    <result column="OUT_TIME" property="outTime" jdbcType="TIMESTAMP" />
+    <result column="LUCKY_NO" property="luckyNo" jdbcType="NUMERIC" />
+    <result column="USER_ID" property="userId" jdbcType="NUMERIC" />
+    <result column="USER_NICK" property="userNick" jdbcType="VARCHAR" />
+    <result column="ORDER_ID" property="orderId" jdbcType="NUMERIC" />
+    <result column="IS_NOTIFY" property="isNotify" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="listByPageResultMap" type="com.icloud.dto.PrizeRecordEntityDto" >
+	<result column="CURRENT_PERIOD" property="currentPeriod" jdbcType="NUMERIC" />
+	<result column="CURRENT_NUM" property="currentNum" jdbcType="NUMERIC" />
+    <result column="OUT_TIME" property="outTime" jdbcType="TIMESTAMP" />
+    <result column="LUCKY_NO" property="luckyNo" jdbcType="NUMERIC" />
+    <result column="USER_NICK" property="userNick" jdbcType="VARCHAR" />
+    <result column="AR_ID" property="arId" jdbcType="NUMERIC" />
+  </resultMap>
+  <resultMap id="RecordJoinRaiseMap" type="com.icloud.model.PrizeRecord" >
+    <id column="ID" property="id" jdbcType="NUMERIC" />
+    <result column="RAISE_ID" property="raiseId" jdbcType="NUMERIC" />
+    <result column="OUT_TIME" property="outTime" jdbcType="TIMESTAMP" />
+    <result column="LUCKY_NO" property="luckyNo" jdbcType="NUMERIC" />
+    <result column="USER_ID" property="userId" jdbcType="NUMERIC" />
+    <result column="USER_NICK" property="userNick" jdbcType="VARCHAR" />
+    <result column="ORDER_ID" property="orderId" jdbcType="NUMERIC" />
+    <result column="IS_NOTIFY" property="isNotify" jdbcType="VARCHAR" />
+    <association property="raise" 
+    			 column="RAISE_ID" 
+    			 select="com.icloud.dao.RaiseMapper.selectByPrimaryKey"/>
+  </resultMap>  
+  <sql id="Base_Column_List" >
+    ID, RAISE_ID, OUT_TIME, LUCKY_NO, USER_ID, USER_NICK, ORDER_ID, IS_NOTIFY
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_PRIZE_RECORD
+    where ID = #{id,jdbcType=NUMERIC}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from T_PRIZE_RECORD
+    where ID = #{id,jdbcType=NUMERIC}
+  </delete>
+  <insert id="insert" parameterType="com.icloud.model.PrizeRecord" >
+  	<selectKey order="BEFORE" keyProperty="id" resultType="java.lang.Long">
+	    	SELECT seq_raise_prize_record.NEXTVAL as id FROM DUAL
+	</selectKey>
+    insert into T_PRIZE_RECORD (ID, RAISE_ID, OUT_TIME, 
+      LUCKY_NO, USER_ID, USER_NICK, 
+      ORDER_ID, IS_NOTIFY)
+    values (#{id}, #{raiseId,jdbcType=NUMERIC}, #{outTime,jdbcType=TIMESTAMP}, 
+      #{luckyNo,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{userNick,jdbcType=VARCHAR}, 
+      #{orderId,jdbcType=NUMERIC}, #{isNotify,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.icloud.model.PrizeRecord" >
+    insert into T_PRIZE_RECORD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="raiseId != null" >
+        RAISE_ID,
+      </if>
+      <if test="outTime != null" >
+        OUT_TIME,
+      </if>
+      <if test="luckyNo != null" >
+        LUCKY_NO,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="userNick != null" >
+        USER_NICK,
+      </if>
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+      <if test="isNotify != null" >
+        IS_NOTIFY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=NUMERIC},
+      </if>
+      <if test="raiseId != null" >
+        #{raiseId,jdbcType=NUMERIC},
+      </if>
+      <if test="outTime != null" >
+        #{outTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="luckyNo != null" >
+        #{luckyNo,jdbcType=NUMERIC},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="userNick != null" >
+        #{userNick,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=NUMERIC},
+      </if>
+      <if test="isNotify != null" >
+        #{isNotify,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.icloud.model.PrizeRecord" >
+    update T_PRIZE_RECORD
+    <set >
+      <if test="raiseId != null" >
+        RAISE_ID = #{raiseId,jdbcType=NUMERIC},
+      </if>
+      <if test="outTime != null" >
+        OUT_TIME = #{outTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="luckyNo != null" >
+        LUCKY_NO = #{luckyNo,jdbcType=NUMERIC},
+      </if>
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=NUMERIC},
+      </if>
+      <if test="userNick != null" >
+        USER_NICK = #{userNick,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        ORDER_ID = #{orderId,jdbcType=NUMERIC},
+      </if>
+      <if test="isNotify != null" >
+        IS_NOTIFY = #{isNotify,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=NUMERIC}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.icloud.model.PrizeRecord" >
+    update T_PRIZE_RECORD
+    set RAISE_ID = #{raiseId,jdbcType=NUMERIC},
+      OUT_TIME = #{outTime,jdbcType=TIMESTAMP},
+      LUCKY_NO = #{luckyNo,jdbcType=NUMERIC},
+      USER_ID = #{userId,jdbcType=NUMERIC},
+      USER_NICK = #{userNick,jdbcType=VARCHAR},
+      ORDER_ID = #{orderId,jdbcType=NUMERIC},
+      IS_NOTIFY = #{isNotify,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=NUMERIC}
+  </update>
+  <!-- 通过众筹id查询众筹中奖记录数 -->
+  <select id="findByRecordId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+	    select 
+	    <include refid="Base_Column_List" />
+	    from T_PRIZE_RECORD
+	    where RAISE_ID = #{id,jdbcType=NUMERIC}
+  </select>
+  <!-- 查询开奖列表 -->
+  <select id="listByPage" resultMap="listByPageResultMap" parameterType="java.util.Map" >
+	    select raise.CURRENT_PERIOD, raise.CURRENT_NUM, pr.OUT_TIME, pr.LUCKY_NO, pr.USER_NICK, ar.ID as AR_ID
+	      from 
+	      T_PRIZE_RECORD pr inner join T_ZL_RAISE raise 
+	      on pr.RAISE_ID=raise.ID and raise.CURRENT_STATUS = '3'
+	      left join T_AWARD_RECORD ar
+	      on pr.raise_id=ar.raise_id and pr.user_id=ar.user_id
+	    where 1=1 
+	    <if test="period != null and period !=0" >
+        	and raise.CURRENT_PERIOD = #{period,jdbcType=NUMERIC}
+      	</if>
+	    order by raise.CURRENT_PERIOD desc, raise.CURRENT_NUM desc
+  </select>	 
+  <!-- 查询开奖列表用于导出excel -->
+  <select id="exportPrizeRecord" resultMap="listByPageResultMap" parameterType="java.util.Map" >
+	    select raise.CURRENT_PERIOD, raise.CURRENT_NUM, pr.OUT_TIME, pr.LUCKY_NO, pr.USER_NICK, ar.ID as AR_ID
+	      from 
+	      T_PRIZE_RECORD pr inner join T_ZL_RAISE raise 
+	      on pr.RAISE_ID=raise.ID and raise.CURRENT_STATUS = '3'
+	      left join T_AWARD_RECORD ar
+	      on pr.raise_id=ar.raise_id and pr.user_id=ar.user_id
+	    where 1=1 
+	    <if test="period != null and period !=0" >
+        	and raise.CURRENT_PERIOD = #{period,jdbcType=NUMERIC}
+      	</if>
+	    order by raise.CURRENT_PERIOD desc, raise.CURRENT_NUM desc
+  </select>
+  <!-- 通过用户id,到粉丝表查找 -->
+  <!--  -->
+  <!-- 通过订单id,修改中奖记录状态 -->
+  <update id="updateMsgSendState"  parameterType="com.icloud.model.PrizeRecord">
+  	UPDATE   t_prize_record    SET  is_notify=#{isNotify,jdbcType=VARCHAR}    WHERE  id =#{id,jdbcType=NUMERIC}
+  </update>
+  
+  <select id="selectLuckyNoByRaiseId" resultMap="listByPageResultMap" parameterType="java.lang.Long" >
+	    select 
+	    	lucky_no
+	    from T_PRIZE_RECORD
+	    where raise_id=#{raiseId,jdbcType=NUMERIC}
+	    order by lucky_no asc
+  </select>
+  
+  <select id="getUserPrizeInfo" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from T_PRIZE_RECORD
+    where RAISE_ID = #{raiseId,jdbcType=NUMERIC}
+    and USER_ID = #{userId,jdbcType=NUMERIC}
+  </select>
+  <!-- 查询中奖对象,级联众筹对象 -->
+  <select id="selectRecordJoinRaise" resultMap="RecordJoinRaiseMap" parameterType="java.util.Map" >
+    SELECT 
+    <include refid="Base_Column_List" />
+    FROM T_PRIZE_RECORD
+    WHERE raise_id  in (SELECT id FROM T_ZL_RAISE 
+		                WHERE CURRENT_STATUS = '3'
+		                AND to_char(OUT_TIME,'YYYYMMDD')=to_char(sysdate, 'YYYYMMDD')
+		                )
+    AND  (is_notify IS NULL  OR  is_notify='0')
+  </select> 
+  <select id="selectRecordByRaiseId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+	    select 
+	    	<include refid="Base_Column_List" />
+	    from T_PRIZE_RECORD
+	    where raise_id=#{raiseId,jdbcType=NUMERIC}
+	    order by lucky_no asc
+  </select> 
+</mapper>

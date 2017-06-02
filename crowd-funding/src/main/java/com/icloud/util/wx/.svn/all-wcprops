@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/gxzy/!svn/ver/12545/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/util/wx
+END
+WxDataEncryptAndDecodeUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/gxzy/!svn/ver/10854/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/util/wx/WxDataEncryptAndDecodeUtil.java
+END
+WxConst.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/gxzy/!svn/ver/10854/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/util/wx/WxConst.java
+END
+HttpRequestUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/gxzy/!svn/ver/10855/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/util/wx/HttpRequestUtil.java
+END
+MyX509TrustManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/gxzy/!svn/ver/10854/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/util/wx/MyX509TrustManager.java
+END
+WxSendModelMessageUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/gxzy/!svn/ver/12545/zl/zl_crowd_funding/crowd-funding/src/main/java/com/icloud/util/wx/WxSendModelMessageUtil.java
+END

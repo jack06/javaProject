@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.icloud.dao.event.EventStarRecordMapper">
+	<resultMap id="BaseResultMap" type="com.icloud.model.event.EventStarRecord">
+		<result column="id" jdbcType="VARCHAR" property="id" />
+		<result column="event_id" jdbcType="VARCHAR" property="eventId" />
+		<result column="user_id" jdbcType="VARCHAR" property="userId" />
+		<result column="header_img" jdbcType="VARCHAR" property="headerImg"/> 
+		<result column="nick" jdbcType="VARCHAR" property="nick" />
+		<result column="create_date" property="createDate" />
+	</resultMap>
+
+	<!-- 點贊 -->
+	<insert id="save" parameterType="com.icloud.model.event.EventStarRecord">
+		insert into t_event_star (id, event_id, user_id,header_img,nick,create_date
+		)
+		values (replace(uuid(),'-',''), #{eventId,jdbcType=VARCHAR},
+		#{userId,jdbcType=VARCHAR},
+		#{headerImg,jdbcType=VARCHAR},
+		#{nick,jdbcType=VARCHAR},#{createDate}
+		)
+	</insert>
+	<!-- 查询事件的点赞数 -->
+	<select id="findCountByEvent" parameterType="String"
+		resultType="Integer">
+		select count(1) from t_event_star where event_id=#{eventId}
+	</select>
+    <!-- 查询用户是否已经点赞 -->
+    <select id="selectByUser" parameterType="com.icloud.model.event.EventStarRecord" resultMap="BaseResultMap">
+       select * from t_event_star where user_id=#{userId} and event_id=#{eventId}
+    </select>
+    <!-- 查询点赞列表 -->
+    <select id="findList" parameterType="com.icloud.model.event.EventStarRecord" resultMap="BaseResultMap">
+     select * from t_event_star 
+     <where>
+       <if test="null != userId">
+        and userId=#{userId}
+       </if>
+       <if test="null != eventId">
+        and event_id = #{eventId}
+       </if>
+     </where>
+    </select>
+    
+    
+</mapper>
